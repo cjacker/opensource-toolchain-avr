@@ -44,19 +44,19 @@ If you use arduino as ISP programmer, you need:
 
 It will turn your arduino board to ISP programmer.
 
-**3. Gain control of the chip's RESET pin **
+**3. Gain control of the chip's RESET pin**
 
 The 'RESET' pin of the ISP header on usbasp adapter need to be updated is not connect to the atmega8 chip's RESET pin, thus you can not program the adapter until gain control of the chip's RESET pin.
 
 Usually, the usbasp programmer need to be updated should have a Jumper "JP2" on board as:
 
-![usbjumper](https://user-images.githubusercontent.com/1625340/170300994-dec83783-461e-478b-b673-723484030026.png)
+<img src="https://user-images.githubusercontent.com/1625340/170300994-dec83783-461e-478b-b673-723484030026.png" width=50%/>
 
 **This jumper need to be closed to connect the "RESET" pin of ISP header to atmega8 chip's RESET pin (pin 29) to enable self-programming.**
 
 There are a lot of cheap and old USBASP programmer do not have such a Jumper JP2 on board, such as:
 
-![usbasp-nojp2](https://user-images.githubusercontent.com/1625340/170302304-7ddabb6f-31f7-43db-9a34-5ad9db00800d.jpg)
+<img src="https://user-images.githubusercontent.com/1625340/170302304-7ddabb6f-31f7-43db-9a34-5ad9db00800d.jpg" width=50%/>
 
 If you have such a programmer need to be updated, you have to solder a wire to the chip's RESET pin or use test hook to connect a wire to it. **this wire will be used as RESET pin to program the target usbasp adapter later", note the RESET pin of atmega8 is pin 29:
 
@@ -109,7 +109,7 @@ avrdude -C <Where your Arduino IDE>/hardware/tools/avr/etc/avrdude.conf -p m8 -c
 With a working connection to the target ATmega8,
 
 ```
-avrdude -p m8 -c <your programmer" -P /dev/ttyUSB0 -b 19200 -U flash:w:usbasp.atmega8.2011-05-28.hex:i
+avrdude -p m8 -c <your programmer> -P /dev/ttyUSB0 -b 19200 -U flash:w:usbasp.atmega8.2011-05-28.hex:i
 ```
 
 to use arduino as ISP programmer, you still need to use `-c avrisp -C <Where your Arduino IDE>/hardware/tools/avr/etc/avrdude.conf`.
