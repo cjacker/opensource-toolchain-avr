@@ -9,7 +9,7 @@ We are talking AVR, not arduino.
 
 **NOTE:**
 
-- There are various programming/debugging prototols for different AVR models, such as JTAG, debugwire, UPDI. A latest official 'AVR JTAG ICE 3' is always the best choice, but a little bit expensive. ICE3 can support all protocols for different models, and can be supported by avarice very well.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG, debugwire, UPDI. A latest official 'AVR JTAG ICE 3' is always the best choice, but a little bit expensive. ICE3 can support all protocols for different models, and can be supported by avarice very well.
 
 - Most Arduino board is AVR board such as atmega328, but usually with a USB bootloader to make programming easy and may lack of debugging support.
 
