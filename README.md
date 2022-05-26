@@ -11,33 +11,30 @@ AVR microcontrollers are available in three categories:
 
 Maybe, the most famous AVR development board is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. That's to say, Arduino is AVR.
 
-This tutorial is not a tutorial for Arduino, only for AVR.
+This tutorial is not a tutorial for Arduino development, it's mainly for AVR opensource toolchain.
 
 # Hardware prerequist
 
-* AVR development board, such as atmega128, atmega328(Arduino uno/nano, etc), attinyXX, etc. 
+* AVR development board:
+  + such as atmega128, atmega328(Arduino uno/nano, etc), attinyXX, etc. 
+  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino uno or nano)、attiny13(ISP and Debugwire)、atmega4809(Arduino nano every, UPDI)。
+ 
 * ISP programmer: 
   + AVR ISP Programmer (either usbasp or usbtinyisp)
-  + Or an arduino uno/nano board (which can be turn to a ISP programer or UPDI programmer)
-  + Or CH340 USB to TTL adatper to support programming by debugwire/UPDI.
+  + Or an arduino uno/nano board (which can be turn to a ISP programer)
+  + Or CH340 USB to TTL adatper to support programming with debugwire/UPDI.
+
 * Debugger: 
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
-  + or AVR JTAG ICE 3 and above for JTAG/debugwire/UPDI etc.
-  + or USB to TTL adapter with self-made adapter for debugwire.
-  + or An arduino uno/nano board for debugwire/UPDI.
-
+  + or AVR JTAG ICE 3 or ATMEL ICE for JTAG/debugwire/UPDI etc.
+  + or USB to TTL adapter with self-made adapter for debugwire with dwdebug.
+ 
 **NOTE:**
 
-- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial.
+- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer.
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or atmel ICE is always the best choice to support all protocols and also works for atmel SAM mcu, but a little bit expensive. 
-
-- Arduino uno/nano usually have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer and debugwire/updi debugger. If you do not need to use jtag, an Arduino board should be enough as a programmer and debugger hardware.
-
-- **The cheapest solution of programming and debugging** should be "an AVR JTAG ICE + an arduino board", then you can work with JTAG/DebugWire/UPDI debugging protocol. But note: if you use an ISP programmer to enable debugwire FUSE bit of some chips, you can not disable it anymore without at least JTAG ICE MKII.
-
-
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice to support all debugging protocols and also works for atmel SAM mcu, but a little bit expensive. 
 
 # Toolchain overview
 
@@ -45,8 +42,11 @@ This tutorial is not a tutorial for Arduino, only for AVR.
 * SDK: avr-libc
 * Programer: avrdude
 * Debugger: avarice/dwdebug, avr-gdb
+* [Optional] Simulator: simavr.
+
 
 # Compiler and SDK
+AVR has very good support from opensource community include avr-binutils(binary utils), avr-gcc(compiler), avr-libc(c libraries), avrdude(the programmer) and avrrice(the debug bridge), it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install it via pkg management tools of your distribution.
 
 
 
