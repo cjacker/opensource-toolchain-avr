@@ -5,16 +5,25 @@ We are talking AVR, not arduino.
 # Hardware prerequist
 
 * AVR development board, such as atmega128, atmega328, attinyXX, etc. 
-* AVR ISP programmer (either usbasp or usbtinyisp or an arduino board).
-* AVR JTAG ICE/mk2/3 or atmel ICE or a self-made adapter support for debugwire.
+* ISP programmer: 
+  + AVR ISP Programmer (either usbasp or usbtinyisp)
+  + Or an arduino uno/nano board (which can be turn to a ISP programer)
+* Debugger: 
+  + AVR JTAG ICE and above for JTAG
+  + or AVR JTAG ICE MKII and above for JTAG/debugwire
+  + or AVR JTAG ICE 3 and above for JTAG/debugwire/UPDI etc.
+  + or USB to TTL adapter with self-made adapter for debugwire.
+  + or An arduino uno/nano board for debugwire/UPDI.
 
 **NOTE:**
+- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial.
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG, debugwire, UPDI, etc. The latest official 'atmel ICE' is always the best choice to support all protocols, but a little bit expensive. Earlier version of AVR JTAG ICE may lack some protocol support, for example, if you want to disable debugwire FUSE after set it, you have to use AVR JTAG ICE MK2 and above.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official 'atmel ICE' is always the best choice to support all protocols and also works for atmel SAM mcu, but a little bit expensive. 
 
-- Arduino uno/nano and some other arduino board use atmega328, usually with a USB bootloader to make programming easy and may lack of debugging support depending on the circuit design.
+- Arduino uno/nano usually have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer and debugwire/updi debugger. If you do not need to use jtag, an Arduino board should be enough as a programmer and debugger hardware.
 
-- Arduino board can be used either as target development board or ISP programmer with this tutorial.
+- The cheapest solution of programming and debugging should be "a AVR JTAG ICE + an arduino board", then you can work with JTAG/DebugWire/UPDI debugging protocol. But note: if you use an ISP programmer to enable debugwire FUSE bit of some chips, you can not disable it anymore without at least JTAG ICE MKII.
+
 
 
 # Toolchain overview
