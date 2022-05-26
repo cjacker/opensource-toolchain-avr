@@ -6,15 +6,15 @@ We are talking AVR, not arduino.
 
 * AVR development board, such as atmega128, atmega328, attinyXX, etc. 
 * AVR ISP programmer (either usbasp or usbtinyisp or an arduino board).
-* AVR JTAG ICE/mk2/3 or a self-made adapter support for debugwire.
+* AVR JTAG ICE/mk2/3 or atmel ICE or a self-made adapter support for debugwire.
 
 **NOTE:**
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG, debugwire, UPDI, etc. The latest official 'AVR JTAG ICE 3' is always the best choice to support all protocols if you really need it, but a little bit expensive. Earlier version of AVR JTAG ICE may lack some protocol support, for example, if you want to disable debugwire FUSE after set it, you have to use AVR JTAG ICE MK2 and above.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG, debugwire, UPDI, etc. The latest official 'atmel ICE' is always the best choice to support all protocols, but a little bit expensive. Earlier version of AVR JTAG ICE may lack some protocol support, for example, if you want to disable debugwire FUSE after set it, you have to use AVR JTAG ICE MK2 and above.
 
-- arduino uno/nano and some other arduino board use atmega328, usually with a USB bootloader to make programming easy and may lack of debugging support depending on the circuit design.
+- Arduino uno/nano and some other arduino board use atmega328, usually with a USB bootloader to make programming easy and may lack of debugging support depending on the circuit design.
 
-- arduino board can be used either as target development board or ISP programmer with this tutorial.
+- Arduino board can be used either as target development board or ISP programmer with this tutorial.
 
 
 # Toolchain overview
