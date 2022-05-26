@@ -18,7 +18,8 @@ This tutorial is not a tutorial for Arduino, only for AVR.
 * AVR development board, such as atmega128, atmega328(Arduino uno/nano, etc), attinyXX, etc. 
 * ISP programmer: 
   + AVR ISP Programmer (either usbasp or usbtinyisp)
-  + Or an arduino uno/nano board (which can be turn to a ISP programer)
+  + Or an arduino uno/nano board (which can be turn to a ISP programer or UPDI programmer)
+  + Or CH340 USB to TTL adatper to support programming by debugwire/UPDI.
 * Debugger: 
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
@@ -30,7 +31,7 @@ This tutorial is not a tutorial for Arduino, only for AVR.
 
 - Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial.
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official 'atmel ICE' is always the best choice to support all protocols and also works for atmel SAM mcu, but a little bit expensive. 
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or atmel ICE is always the best choice to support all protocols and also works for atmel SAM mcu, but a little bit expensive. 
 
 - Arduino uno/nano usually have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer and debugwire/updi debugger. If you do not need to use jtag, an Arduino board should be enough as a programmer and debugger hardware.
 
