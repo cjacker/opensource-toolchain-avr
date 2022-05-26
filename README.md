@@ -1,10 +1,21 @@
 # Opensource toolchain for AVR
-to be written.
-We are talking AVR, not arduino.
+
+AVR is a family of modified Harvard architecture 8-bit RISC microcontrollers, it was developed in the year 1996 by Atmel Corporation and acquired by Microchip Technology in 2016. 
+
+The architecture of AVR was developed by Alf-Egil Bogen and Vegard Wollan. AVR derives its name from its developers and stands for Alf-Egil Bogen Vegard Wollan RISC microcontroller, also known as Advanced Virtual RISC. The AT90S8515 was the first microcontroller which was based on AVR architecture.
+
+AVR microcontrollers are available in three categories:
+- TinyAVR – Less memory, small size, suitable only for simpler applications
+- MegaAVR – These are the most popular ones having good amount of memory (upto 256 KB), higher number of inbuilt peripherals and suitable for moderate to complex applications.
+- XmegaAVR – Used commercially for complex applications, which require large program memory and high speed.
+
+Maybe, the most famous AVR development board is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. That's to say, Arduino is AVR.
+
+This tutorial is not a tutorial for Arduino, only for AVR.
 
 # Hardware prerequist
 
-* AVR development board, such as atmega128, atmega328, attinyXX, etc. 
+* AVR development board, such as atmega128, atmega328(Arduino uno/nano, etc), attinyXX, etc. 
 * ISP programmer: 
   + AVR ISP Programmer (either usbasp or usbtinyisp)
   + Or an arduino uno/nano board (which can be turn to a ISP programer)
@@ -16,13 +27,14 @@ We are talking AVR, not arduino.
   + or An arduino uno/nano board for debugwire/UPDI.
 
 **NOTE:**
+
 - Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial.
 
 - There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official 'atmel ICE' is always the best choice to support all protocols and also works for atmel SAM mcu, but a little bit expensive. 
 
 - Arduino uno/nano usually have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer and debugwire/updi debugger. If you do not need to use jtag, an Arduino board should be enough as a programmer and debugger hardware.
 
-- The cheapest solution of programming and debugging should be "a AVR JTAG ICE + an arduino board", then you can work with JTAG/DebugWire/UPDI debugging protocol. But note: if you use an ISP programmer to enable debugwire FUSE bit of some chips, you can not disable it anymore without at least JTAG ICE MKII.
+- **The cheapest solution of programming and debugging** should be "an AVR JTAG ICE + an arduino board", then you can work with JTAG/DebugWire/UPDI debugging protocol. But note: if you use an ISP programmer to enable debugwire FUSE bit of some chips, you can not disable it anymore without at least JTAG ICE MKII.
 
 
 
