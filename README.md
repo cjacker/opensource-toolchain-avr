@@ -32,11 +32,18 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
  
 **NOTE:**
 
-- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer.
+- You always need an ISP programmer to program or change the FUSE bits.
+  + Any ISP programmer is able to enable debugwire FUSE bit if the target chip support it. but if you want to disable it, you have to use JTAG ICE MKII and above.
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice to support all debugging protocols and also works for atmel SAM mcu, but a little bit expensive. 
+- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
-- **The cheapest way to start learning AVR** is an arduino board, such as uno/nano or nano every, it do not require addtional hardwares to programming, but due to the circuit design, the on chip debugging (debugwire for nano) is disabled by default, you need modify hardware to enable it.
+- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do this).
+
+- If the chip support JTAG debugging, the cheapest AVR JTAG ICE is enough for it.
+
+- If the chip support debugwire debugging and you do not need to disable DWEN fuse bit later, you can use CH340 USB to TTL adapter with dwdebug to debug it, it's not necesary to buy a AVR ICE MKII and above.
+
+- For other satuation, buy a AVR ICE 3 or ATMEL-ICE. There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except price.
 
 # Toolchain overview
 
