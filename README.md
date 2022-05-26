@@ -36,7 +36,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice to support all debugging protocols and also works for atmel SAM mcu, but a little bit expensive. 
 
-- **The cheapest way to learning AVR** is an arduino board, such as uno/nano or nano every, it do not require addtional hardwares to programming, but due to the circuit design, the on chip debugging (debugwire for nano) is disabled by default, you need modify hardware to enable it.
+- **The cheapest way to start learning AVR** is an arduino board, such as uno/nano or nano every, it do not require addtional hardwares to programming, but due to the circuit design, the on chip debugging (debugwire for nano) is disabled by default, you need modify hardware to enable it.
 
 # Toolchain overview
 
