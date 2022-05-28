@@ -29,36 +29,35 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 or ATMEL ICE or PICKIT4 for JTAG/debugwire/UPDI etc.
-  + or USB to TTL adapter with self-made adapter for debugwire with [dwdebug](https://github.com/dcwbrown/dwire-debug).
+  + or USB to TTL adapter with a self-made adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug).
  
 **NOTE:**
 
 - You'd better have an ISP programmer to program or change the FUSE bits.
 
-- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device, for example, Any ISP programmer is able to enable debugwire FUSE bit, but if you want to disable it, you have to use AVR DRAGON/ICE MKII and above or you have a High-Voltage programmer. for UPDI, you have to use HV UPDI programmer.
+- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to enable DWEN(debugwire FUSE bit), but if you want to turn it off, you have to use AVR DRAGON/ICE MKII and above or you have a High-Voltage programmer. For UPDI, if you set the pin to GPIO, you have to use HV UPDI programmer to program it.
 
 - Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
 - Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin(Debugwire pin for 328), you need modify the hardware to enable it (and do not do this).
 
-- If the chip support debugwire debugging and you do not need to disable DWEN fuse bit later, you can use CH340 USB to TTL adapter with dwdebug to debug it, it's not necesary to buy a AVR ICE MKII and above.
 
-- For other satuations, buy a AVR ICE 3 or ATMEL-ICE. There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except price.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version ICE devices may lack of support for some protocols，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except the price.
 
-- Pickit4 also support all avr debug protocols include hv updi support after atmel was acquired by microchip, but lack of good opensource support except pymcuprog for avr mode. 
+- Pickit4 also support all avr debug protocols include hv updi support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
+
 
 # Toolchain overview
 
 * Compiler: avr-gcc
 * SDK: avr-libc
-* Programer: avrdude/updiprog/pymcuprog
+* Programer: avrdude/updiprog/pyupdi/pymcuprog
 * Debugger: avarice/dwdebug/pyavrdbg, avr-gdb
-* [Optional] Simulator: simavr.
+* Simulator: simavr.
 
 
 # Compiler and SDK
-AVR has very good support from opensource community include avr-binutils(binary utils), avr-gcc(compiler), avr-libc(c libraries), avrdude(the programmer) and avrrice(the debug bridge), it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install it via pkg management tools of your distribution.
-
+AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install it via pkg management tools of your distribution.
 
 
 
