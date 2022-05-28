@@ -57,7 +57,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 
 # Compiler and SDK
-AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install it via pkg management tools of your distribution.
+AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install these packages via pkg management tools of your distribution.
 
 
 
