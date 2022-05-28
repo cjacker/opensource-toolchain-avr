@@ -86,11 +86,54 @@ Arduino board names all pins from D0 to D13 and A0 to A7. the corresponding pin 
 # Compiler and SDK
 AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install these packages via pkg management tools of your distribution.
 
+As usual, let's start with a blink example, below codes is well self-explained:
+
+```
+// main.c
+// blink led every second
+// wire: PB0(Arduino D8)->Resistor-> LED->GND
+
+#include <avr/io.h>
+
+#ifndef F_CPU
+#define F_CPU 8000000UL // change it to clock speed, used by delay.h
+#endif
+#include <util/delay.h>
+
+// 1 sec if F_CPU set up correctly.
+#define MS_DELAY 1000
+
+int main (void) {
+
+    DDRB |= 0x01;// PB0 as OUTPUT
+
+    PORTB &= 0xFE; // PB0 to 0
+
+    while(1) {
+        PORTB ^= 0x01; // toggle PB0
+        _delay_ms(MS_DELAY);
+    }
+}
+```
+
+Save it to 'main.c' and build:
+
+```
+avr-gcc -c -g -Os -mmcu=<MCU TYPE> main.c -o main.o
+avr-gcc -mmcu=<MCU TYPE>  main.o -o main.elf
+avr-objcopy -O ihex main.elf main.hex
+```
+
+**NOTE:**, change the `<MCU TYPE>` to mcu you use, for mcu type avr-gcc can supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
+
+# Programming
+
+# Debugging
 
 
-# how to update usbasp firmware
+# how to update USBASP firmware
 
-If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, but If you insist to update the usbasp firmware, follow this guide:
+If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow this guide:
 
 **1. Download the USBASP firmware**
 
