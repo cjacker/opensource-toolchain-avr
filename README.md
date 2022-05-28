@@ -124,7 +124,7 @@ avr-gcc -mmcu=<MCU TYPE>  main.o -o main.elf
 avr-objcopy -O ihex main.elf main.hex
 ```
 
-**NOTE:**, change the `<MCU TYPE>` to mcu you use, for mcu type avr-gcc can supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
+**NOTE:**, change the `<MCU TYPE>` to the model you use, for mcu type avr-gcc already supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
 
 # Programming
 
