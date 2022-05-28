@@ -49,7 +49,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 * Compiler: avr-gcc
 * SDK: avr-libc
-* Programer: avrdude
+* Programer: avrdude/updiprog
 * Debugger: avarice/dwdebug, avr-gdb
 * [Optional] Simulator: simavr.
 
