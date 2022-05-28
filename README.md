@@ -9,15 +9,14 @@ AVR microcontrollers are available in three categories:
 - MegaAVR – These are the most popular ones having good amount of memory (upto 256 KB), higher number of inbuilt peripherals and suitable for moderate to complex applications.
 - XmegaAVR – Used commercially for complex applications, which require large program memory and high speed.
 
-Maybe, the most famous AVR development board is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. That's to say, Arduino is AVR.
+Maybe, the most famous development board using AVR is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. 
 
 This tutorial is not a tutorial for Arduino development, it's for AVR opensource toolchain.
 
 # Hardware prerequist
 
 * AVR development board:
-  + such as atmega128, atmega328(Arduino uno/nano, etc), attinyXX, etc. 
-  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino uno or nano)、attiny13(ISP and Debugwire)、atmega4809(Arduino nano every, UPDI)。
+  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino uno or nano)、attiny13(ISP and Debugwire)、atmega4808(UPDI)。
  
 * ISP programmer: 
   + AVR ISP Programmer (either usbasp or usbtinyisp)
@@ -28,22 +27,23 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 or ATMEL ICE for JTAG/debugwire/UPDI etc.
-  + or USB to TTL adapter with self-made adapter for debugwire with dwdebug.
+  + or USB to TTL adapter with self-made adapter for debugwire with [dwdebug](https://github.com/dcwbrown/dwire-debug).
  
 **NOTE:**
 
-- You always need an ISP programmer to program or change the FUSE bits.
-  + Any ISP programmer is able to enable debugwire FUSE bit if the target chip support it. but if you want to disable it, you have to use JTAG ICE MKII and above.
+- You'd better have an ISP programmer to program or change the FUSE bits.
+
+- Changing FUSE bits is a little bit dangerous for beginners, for example, Any ISP programmer is able to enable debugwire FUSE bit, but if you want to disable it, you have to use AVR DRAGON/ICE MKII and above or you have a High-Voltage programmer. for UPDI, you have to use HV UPDI programmer.
 
 - Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
-- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do this).
+- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin(Debugwire pin for 328), you need modify the hardware to enable it (and do not do this).
 
 - If the chip support JTAG debugging, the cheapest AVR JTAG ICE is enough for it.
 
 - If the chip support debugwire debugging and you do not need to disable DWEN fuse bit later, you can use CH340 USB to TTL adapter with dwdebug to debug it, it's not necesary to buy a AVR ICE MKII and above.
 
-- For other satuation, buy a AVR ICE 3 or ATMEL-ICE. There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except price.
+- For other satuations, buy a AVR ICE 3 or ATMEL-ICE. There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except price.
 
 # Toolchain overview
 
