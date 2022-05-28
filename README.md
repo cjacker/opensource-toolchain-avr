@@ -28,8 +28,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 * Debugger: 
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
-  + or AVR JTAG ICE 3 or ATMEL ICE for JTAG/debugwire/UPDI etc.
-  + or Pickit4 for all protocols
+  + or AVR JTAG ICE 3 or ATMEL ICE or PICKIT4 for JTAG/debugwire/UPDI etc.
   + or USB to TTL adapter with self-made adapter for debugwire with [dwdebug](https://github.com/dcwbrown/dwire-debug).
  
 **NOTE:**
@@ -41,8 +40,6 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 - Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
 - Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin(Debugwire pin for 328), you need modify the hardware to enable it (and do not do this).
-
-- If the chip support JTAG debugging, the cheapest AVR JTAG ICE is enough for it.
 
 - If the chip support debugwire debugging and you do not need to disable DWEN fuse bit later, you can use CH340 USB to TTL adapter with dwdebug to debug it, it's not necesary to buy a AVR ICE MKII and above.
 
