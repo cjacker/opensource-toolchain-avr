@@ -29,7 +29,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 or ATMEL ICE for JTAG/debugwire/UPDI etc.
-  + Pickit4 for all protocols
+  + or Pickit4 for all protocols
   + or USB to TTL adapter with self-made adapter for debugwire with [dwdebug](https://github.com/dcwbrown/dwire-debug).
  
 **NOTE:**
@@ -48,7 +48,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - For other satuations, buy a AVR ICE 3 or ATMEL-ICE. There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP/JTAG/debugwire/UPDI, etc. Earlier version of AVR JTAG ICE may lack some protocol support，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except price.
 
-- Pickit4 also support all protocols include hv updi support, but lack of good opensource support except pymcuprog, and only works for avr, not for pic. 
+- Pickit4 also support all avr debug protocols include hv updi support after atmel was acquired by microchip, but lack of good opensource support except pymcuprog for avr mode. 
 
 # Toolchain overview
 
