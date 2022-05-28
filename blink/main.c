@@ -4,7 +4,7 @@
 #include <avr/io.h>
 
 #ifndef F_CPU
-#define F_CPU 3000000UL // clock speed, used by delay.h
+#define F_CPU 8000000UL // clock speed, used by delay.h
 #endif
 #include <util/delay.h>
 
