@@ -49,6 +49,9 @@ else ifeq ($(MCU_TYPE), atmega328p)
 	avrdude -c arduino -p m328p -P /dev/ttyUSB0 -b 115200 -U flash:w:$(TARGET)
 endif
 
+flash_debugwire:
+	dwdebug l ./main.elf,qr
+
 clean:
 	rm -f $(OBJECTS) main.elf main.hex
  
