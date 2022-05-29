@@ -239,7 +239,89 @@ For more help of dwdebug, please refer to [dwdebug manual](https://github.com/dc
 
 ## 5.1 with avarice
 
-AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. 
+AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. It can support a lot of debugger devices, such as AVR JTAG ICE MKI/MKII/3, AVR Dragon and ATMEL-ICE etc.
+
+Up to this tutorial written, most linux distribution shipped avarice-2.13 by default, version 2.13 can not support ATMEL-ICE, if you use ATMEL-ICE, you can use this version: https://github.com/Florin-Popescu/avarice/
+
+Build and install it:
+
+```
+./configure --prefix=/usr/local --program-suffix=-2.14 --datadir=/usr/local/share/avarice-2.14
+make
+sudo make install
+```
+
+The program suffix and another datadir is to avoid conflict with avarice shipped by your distribution.
+
+After installed, the command you can use is `avarice-2.14`.
+
+Try run below command to find help information and determine the command args you should use according to your debugger hardware:
+
+```
+avarice --help
+```
+
+Using atmega128 as example, wire up the debugger and target board correctly (usually, there are two 10pin header in your board, one is ISP and another one is JTAG), and open the terminal to luanch a avarice session:
+
+For JTAG ICE, you may need to specify the device:
+
+```
+avarice-2.14 -j /dev/ttyUSB0 --program --file ./main.elf :3333
+```
+And the output looks like
+```
+AVaRICE version 2.13, May 24 2022 00:00:00
+
+Defaulting JTAG bitrate to 250 kHz.
+
+JTAG config starting.
+Hardware Version: 0xc0
+Software Version: 0x80
+Reported JTAG device ID: 0x9702
+Configured for device ID: 0x9702 atmega128
+JTAG config complete.
+Preparing the target device for On Chip Debugging.
+Waiting for connection on port 3333.
+```
+
+For ATMEL-ICE, you should use:
+
+```
+avarice-2.14 -4 --program --file ./main.elf :3333
+```
+
+And the output looks like:
+
+```
+AVaRICE version 2.14
+
+Defaulting JTAG bitrate to 250 kHz.
+
+JTAG config starting.
+Found a device, serial number: J42700018439
+Reported device ID: 0x9702
+Configured for device ID: 0x9702 atmega128
+JTAG config complete.
+Preparing the target device for On Chip Debugging.
+Waiting for connection on port 3333.
+```
+
+And open another terminal to start avr-gdb as:
+
+```
+avr-gdb ./main.elf
+Reading symbols from main.elf...
+(gdb) target remote :3333
+Remote debugging using :3333
+0x00000000 in __vectors ()
+(gdb) break main
+Breakpoint 1 at 0xa4: file main.c, line 16.
+(gdb) break 16
+Note: breakpoint 1 also set at pc 0xa4.
+Breakpoint 2 at 0xa4: file main.c, line 16.
+(gdb) c
+Continuing.
+```
 
 ## 5.2 with dwdebug
 
