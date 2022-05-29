@@ -173,6 +173,8 @@ sudo avrdude -p help
 
 [dwdebug](https://github.com/dcwbrown/dwire-debug) is a simple stand-alone programmer and debugger for AVR processors that support DebugWIRE.
 
+I prefer this way to program and debug low pin attiny MCUs. 
+
 If your target MCU support debugwire protocol, such as attiny13/85, you can set 'DWEN' FUSE bit to enable debugwire by any ISP programmer.
 
 **NOTE 1: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
@@ -261,12 +263,12 @@ Try run below command to find help information and determine the command args yo
 avarice --help
 ```
 
-Using atmega128 as example, wire up the debugger and target board correctly (usually, there are two 10pin header in your board, one is ISP and another one is JTAG), and open the terminal to luanch a avarice session:
+Using atmega128 as example, after programming with `avrdude`, wire up the debugger and target board correctly (usually, there are two 10pin header in your board, one is ISP and another one is JTAG), and open the terminal to luanch a avarice session,
 
-For JTAG ICE, you may need to specify the device:
+For JTAG ICE, you may need to specify the port, here is /dev/ttyUSB0:
 
 ```
-avarice-2.14 -j /dev/ttyUSB0 --program --file ./main.elf :3333
+avarice-2.14 -j /dev/ttyUSB0 :3333
 ```
 And the output looks like
 ```
@@ -323,9 +325,42 @@ Breakpoint 2 at 0xa4: file main.c, line 16.
 Continuing.
 ```
 
+**NOTE:** the process above use JTAG debug protocol. if the target use debugwire protocol, apply '-w' arg to avarice. if it's updi protocol, apply '-p' arg.
+
+
 ## 5.2 with dwdebug
 
-For AVR MCU supporting debugwire protocol, you can use dwdebug with self-made CH340/FTx232 adapter mentioned above for debugging. dwdebug itself is a debugger can be used standalone, and it can also work as a bridge to avr-gdb.
+For AVR MCU supporting debugwire protocol, you can use `dwdebug` with self-made CH340/FTx232 adapter mentioned above for debugging. dwdebug itself is a debugger can be used standalone, and it can also work as a bridge to avr-gdb.
+
+I prefer this way to debug some ATTINY models
+
+After program the target device with:
+
+```
+dwdebug l ./main.elf,qr
+```
+
+Launch the dwdebug session with:
+
+```
+dwdebug device ttyUSB0
+```
+
+The output looks like:
+```
+Connected to ATtiny13 on /dev/ttyUSB0 at 9495 baud.
+0036: 4030  sbci  r19, $0               > 
+```
+
+After you get the '>' prompt, type 'help' for more info and launch gdb-server as:
+
+```
+0034: 5021  subi  r18, $1               > gdbserver
+Target ready, waiting for GDB connection.
+
+Info : avrchip: hardware has something
+Use 'target remote :4444'
+```
 
 
 
