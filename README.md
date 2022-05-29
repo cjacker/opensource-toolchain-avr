@@ -184,7 +184,7 @@ Usually, such a programmer is more expensive than a MCU chip. If you only have a
 **NOTE 2: Never touch the 'RSTDISBL' FUSE bit (keep it 1 always), unless you really understand what you are doing and you really have a High Voltage programmer.**
 
 
-**program DWEN FUSE bit**
+**4.2.1 program DWEN FUSE bit**
 
 If your target MCU support debugwire protocol, you can enable it and use debugwire protocol to program.
 
@@ -204,7 +204,7 @@ If you have AVR dragon and above programmer, you can disable debugwire by:
 sudo avrdude -c usbasp -p t13 -U hfuse:w:0xff:m
 ```
 
-**prepare the hardware**
+**4.2.2 prepare the hardware**
 
 dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to the DebugWIRE pin(the RESET pin now is debugwire pin), and TX connected through a 4.7k resistor to RX.
 ```                     
@@ -220,11 +220,11 @@ dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to
  +---------------------+                           +--------------------+
 ```
                          
-For convenient, I make a board easy to plug into my CH340 and FT2232 adapter directly:
+For convenient, I make a little board easy to fit my CH340 and FT2232 adapter:
 
 <img src="https://user-images.githubusercontent.com/1625340/170856074-ef342ae1-792f-413e-91f0-3448a62a5bfe.png" width="50%"/>
 
-**program by dwdebug**
+**4.2.3 program by dwdebug**
 
 ```
 sudo dwdebug l ./main.elf,qr
@@ -366,7 +366,6 @@ All REPL command of dwdebug can be used as commandline argument, to launch gdbse
 ```
 $ dwdebug gdbserver
 ```
-
 
 
 # 6. how to update USBASP firmware
