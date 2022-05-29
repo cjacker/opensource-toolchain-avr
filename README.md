@@ -13,7 +13,7 @@ Maybe, the most famous development board using AVR is Arduino. Arduino is an AVR
 
 This tutorial is not a tutorial for Arduino development, it's for AVR opensource toolchain.
 
-# Hardware prerequist
+# 1. Hardware prerequist
 
 * AVR development board:
   + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino uno or nano)、attiny13(ISP and Debugwire)、atmega4808(UPDI)。
@@ -46,7 +46,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - Pickit4 also support all avr debug protocols include hv updi support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
 
-# Arduino pin map
+## Arduino pin map
 Arduino board names all pins from D0 to D13 and A0 to A7. the corresponding pin name of AVR you can use is listed as below table:
 
 | Arduino uno/nano pin name | atmega328 pin |
@@ -74,7 +74,7 @@ Arduino board names all pins from D0 to D13 and A0 to A7. the corresponding pin 
 | A6                        | PC6           |
 | A7                        | PC7           |
 
-# Toolchain overview
+# 2. Toolchain overview
 
 * Compiler: avr-gcc
 * SDK: avr-libc
@@ -83,7 +83,7 @@ Arduino board names all pins from D0 to D13 and A0 to A7. the corresponding pin 
 * Simulator: simavr.
 
 
-# Compiler and SDK
+# 3. Compiler and SDK
 AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install these packages via pkg management tools of your distribution.
 
 As usual, let's start with a blink example, below codes is well self-explained:
@@ -129,11 +129,11 @@ avr-objcopy -O ihex main.elf main.hex
 The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' in 'Makefile'.
 
 
-# Programming
+# 4. Programming
 
 After 'main.hex' generated, there are various way to program 'main.hex' to AVR. 
 
-## by avrdude
+## 4.1 with avrdude
 
 **NOTE:** if you use ATMEL-ICE, it does NOT supply power to target board, you have to supply power to the target board separately.
 
@@ -169,17 +169,21 @@ sudo avrdude -c help
 sudo avrdude -p help
 ```
 
-## by dwdebug
+## 4.2 with dwdebug
 
 [dwdebug](https://github.com/dcwbrown/dwire-debug) is a simple stand-alone programmer and debugger for AVR processors that support DebugWIRE.
 
 If your target MCU support debugwire protocol, such as attiny13/85, you can set 'DWEN' FUSE bit to enable debugwire by any ISP programmer.
 
-**NOTE: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
+**NOTE 1: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
 
 Usually, such a programmer is more expensive than a MCU chip. If you only have a USBASP/USBTINY ISP programmer, you must understand the satuation here before do anything. And I suggest buying another chip instead of buying a high-end programmer if you wan to use ISP again.
 
-### Program DWEN FUSE bit
+**NOTE 2: Never touch the 'RSTDISBL' FUSE bit (keep it 1 always), unless you really understand what you are doing and you really have a High Voltage programmer.**
+
+
+**program DWEN FUSE bit**
+
 If your target MCU support debugwire protocol, you can enable it and use debugwire protocol to program.
 
 Take attiny 13 as example, according to the datasheet of attiny13:
@@ -198,7 +202,7 @@ If you have AVR dragon and above programmer, you can disable debugwire by:
 sudo avrdude -c usbasp -p t13 -U hfuse:w:0xff:m
 ```
 
-### prepare the hardware
+**prepare the hardware**
 
 dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to the DebugWIRE pin(the RESET pin now is debugwire pin), and TX connected through a 4.7k resistor to RX.
 ```                     
@@ -218,27 +222,42 @@ For convenient, I make a board easy to plug into my CH340 and FT2232 adapter dir
 
 <img src="https://user-images.githubusercontent.com/1625340/170856074-ef342ae1-792f-413e-91f0-3448a62a5bfe.png" width="50%"/>
 
-### program
+**program by dwdebug**
 
 ```
 sudo dwdebug l ./main.elf,qr
 ```
 For more help of dwdebug, please refer to [dwdebug manual](https://github.com/dcwbrown/dwire-debug/blob/master/Manual.md).
 
+## 4.3 with updiprog
 
-# Debugging
+## 4.4 with pymcuprog
 
 
-# how to update USBASP firmware
+
+# 5. Debugging
+
+## 5.1 with avarice
+
+AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. 
+
+## 5.2 with dwdebug
+
+For AVR MCU supporting debugwire protocol, you can use dwdebug with self-made CH340/FTx232 adapter mentioned above for debugging. dwdebug itself is a debugger can be used standalone, and it can also work as a bridge to avr-gdb.
+
+
+
+
+# 6. how to update USBASP firmware
 
 If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow this guide:
 
-**1. Download the USBASP firmware**
+**6.1. Download the USBASP firmware**
 
 Download the firmware from https://www.fischl.de/usbasp/, the lastest version is "https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz". there are 3 hex files in 'bin/firmware' dir, choose the one according to your usbasp adapter. since most of them is atmega8, that's to say, you should use "usbasp.atmega8.2011-05-28.hex" for atmega8.
 
 
-**2. Prepare another workable ISP progammer**
+**6.2. Prepare another workable ISP progammer**
 
 To flash the new firmware onto the target atmega8, we need another ISP programmer. either usbasp adapter or usbtinyisp adapter or arduino board is OK.
 
@@ -251,7 +270,7 @@ If you use arduino as ISP programmer, you need:
 
 It will turn your arduino board to ISP programmer.
 
-**3. Gain control of the chip's RESET pin**
+**6.3. Gain control of the chip's RESET pin**
 
 The 'RESET' pin of the ISP header on usbasp adapter need to be updated is not connect to the atmega8 chip's RESET pin, thus you can not program the adapter until gain control of the chip's RESET pin.
 
@@ -269,7 +288,7 @@ If you have such a programmer need to be updated, you have to solder a wire to t
 
 ![atmega8-pin](https://user-images.githubusercontent.com/1625340/170304456-496d3b60-cc4b-4109-b1e4-f1ad015040f0.png)
 
-**4. Wire up ISP programmer and target usbasp adapter**
+**6.4. Wire up ISP programmer and target usbasp adapter**
 
 If you have another usbasp or usbtinyisp programmer, just wire them up as usual. If there is no JP2 jumper on board, you need connect the programmer's RESET pin directly to target atmega8 chip's RESET pin.
 
@@ -282,7 +301,7 @@ If you use arduino as ISP programmer, you need connect the Arduino to target usb
 * Arduino D11 to target MOSI
 * Arduino D10 to target RESET(if has JP2 jumper) or to the wire from target chip's PIN 29.
 
-**5. Detect the target adapter**
+**6.5. Detect the target adapter**
 
 Run:
 
@@ -312,7 +331,7 @@ to use arduino as ISP programmer, you need to use `<Where your Arduino IDE>/hard
 avrdude -C <Where your Arduino IDE>/hardware/tools/avr/etc/avrdude.conf -p m8 -c avrisp -P /dev/ttyUSB0
 ```
 
-**6. Finally, update the firmwire**
+**6.6. Finally, update the firmwire**
 With a working connection to the target ATmega8,
 
 ```
