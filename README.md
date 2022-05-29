@@ -126,7 +126,105 @@ avr-objcopy -O ihex main.elf main.hex
 
 **NOTE:**, change the `<MCU TYPE>` to the model you use, for mcu type avr-gcc already supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
 
+The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' in 'Makefile'.
+
+
 # Programming
+
+After 'main.hex' generated, there are various way to program 'main.hex' to AVR. 
+
+## by avrdude
+
+**NOTE:** if you use ATMEL-ICE, it does NOT supply power to target board, you have to supply power to the target board separately.
+
+As mentioned above, the software we mostly use to program AVR MCU is avrdude, it can support a lot of programmers include but not limited to usbasp, usbtinyisp, AVR Dragon, ATMEL-ICE and PICKIT4. It also can directly program Arduino via USB cable. The common usage of avrdude looks like,
+
+to detect target MCU:
+```
+sudo avrdude -c <programmer> -p <target>
+```
+
+to program target MCU:
+
+```
+sudo avrdude -c <programmer> -p <target> -U flash:w:<hex file>
+```
+
+The `<programer>` can be:
+* usbasp
+* usbtiny
+* atmelice/isp/dw/pdi/updi for ATMEL-ICE
+* ...
+
+The `<target>` can be:
+* m128 for atmega128
+* m328p for atmega328p
+* t13 for attiny13
+* t85 for attiny85
+
+For all programmers and targets 'avrdude' can support, try run:
+
+```
+sudo avrdude -c help
+sudo avrdude -p help
+```
+
+## by dwdebug
+
+[dwdebug](https://github.com/dcwbrown/dwire-debug) is a simple stand-alone programmer and debugger for AVR processors that support DebugWIRE.
+
+If your target MCU support debugwire protocol, such as attiny13/85, you can set 'DWEN' FUSE bit to enable debugwire by any ISP programmer.
+
+**NOTE: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
+
+Usually, such a programmer is more expensive than a MCU chip. If you only have a USBASP/USBTINY ISP programmer, you must understand the satuation here before do anything. And I suggest buying another chip instead of buying a high-end programmer if you wan to use ISP again.
+
+### Program DWEN FUSE bit
+If your target MCU support debugwire protocol, you can enable it and use debugwire protocol to program.
+
+Take attiny 13 as example, according to the datasheet of attiny13:
+
+![screenshot-2022-05-29-14-30-31](https://user-images.githubusercontent.com/1625340/170855409-7c0eec2f-0811-4638-8506-188cc71e84ff.png)
+
+the default value of hfuse is '0xff', and set it to '0xf7' means debugwire enabled:
+
+```
+sudo avrdude -c usbasp -p t13 -U hfuse:w:0xf7:m
+```
+
+If you have AVR dragon and above programmer, you can disable debugwire by:
+
+```
+sudo avrdude -c usbasp -p t13 -U hfuse:w:0xff:m
+```
+
+### prepare the hardware
+
+dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to the DebugWIRE pin(the RESET pin now is debugwire pin), and TX connected through a 4.7k resistor to RX.
+```                     
+ +---------------------+                           +--------------------+
+ |                 VCC +---------------------------+ VCC                |
+ |                  TX +---+-----------------------+ DebugWire          |
+ |                     |   |                       |                    |
+ |  CH340/FTx232       |   R(4.7k)                 |   AVR Tiny device  |
+ |                     |   |                       |                    |
+ |                  RX +---+                       |                    |    
+ |                     |                           |                    |
+ |                 GND +---+-----------------------+ GND                | 
+ +---------------------+                           +--------------------+
+```
+                         
+For convenient, I make a board easy to plug into my CH340 and FT2232 adapter directly:
+
+<img src="https://user-images.githubusercontent.com/1625340/170856074-ef342ae1-792f-413e-91f0-3448a62a5bfe.png" width="50%"/>
+
+### program
+
+```
+sudo dwdebug l ./main.elf,qr
+```
+For more help of dwdebug, please refer to [dwdebug manual](https://github.com/dcwbrown/dwire-debug/blob/master/Manual.md).
+
 
 # Debugging
 
