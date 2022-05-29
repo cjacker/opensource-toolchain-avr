@@ -91,12 +91,13 @@ As usual, let's start with a blink example, below codes is well self-explained:
 ```
 // main.c
 // blink led every second
-// wire: PB0(Arduino D8)->Resistor-> LED->GND
+// wire: PB0->Resistor-> LED->GND
+// for Arduino user: PB0 is the 'D8' pin.
 
 #include <avr/io.h>
 
 #ifndef F_CPU
-#define F_CPU 8000000UL // change it to clock speed, used by delay.h
+#define F_CPU 8000000UL // change F_CPU according to clock speed, used by delay.h
 #endif
 #include <util/delay.h>
 
@@ -124,27 +125,27 @@ avr-gcc -mmcu=<MCU TYPE>  main.o -o main.elf
 avr-objcopy -O ihex main.elf main.hex
 ```
 
-**NOTE:**, change the `<MCU TYPE>` to the model you use, for mcu type avr-gcc already supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html
+You should change the `<MCU TYPE>` according to your board. for mcu type avr-gcc already supported, please refer to: https://gcc.gnu.org/onlinedocs/gcc/AVR-Options.html.
 
-The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' in 'Makefile'.
+The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' defined in 'Makefile'.
 
 
 # 4. Programming
 
-After 'main.hex' generated, there are various way to program 'main.hex' to AVR. 
+After 'main.hex' generated, there are various way to program 'main.hex' to AVR MCU. 
 
 ## 4.1 with avrdude
 
-**NOTE:** if you use ATMEL-ICE, it does NOT supply power to target board, you have to supply power to the target board separately.
+**NOTE:** if you use ATMEL-ICE as programmer, it does NOT supply power to target board, you have to supply power to the target board separately.
 
-As mentioned above, the software we mostly use to program AVR MCU is avrdude, it can support a lot of programmers include but not limited to usbasp, usbtinyisp, AVR Dragon, ATMEL-ICE and PICKIT4. It also can directly program Arduino via USB cable. The common usage of avrdude looks like,
+As mentioned above, the software we mostly used to program AVR MCU is `avrdude`, it supports a lot of programmers include but not limited to usbasp, usbtinyisp, AVR Dragon, JTAG ICE/MKII/3, ATMEL-ICE and PICKIT4. It also can directly program Arduino with arduino bsl. The common usage of avrdude looks like as below.
 
-to detect target MCU:
+To detect target MCU:
 ```
 sudo avrdude -c <programmer> -p <target>
 ```
 
-to program target MCU:
+To program target MCU:
 
 ```
 sudo avrdude -c <programmer> -p <target> -U flash:w:<hex file>
@@ -173,22 +174,16 @@ sudo avrdude -p help
 
 [dwdebug](https://github.com/dcwbrown/dwire-debug) is a simple stand-alone programmer and debugger for AVR processors that support DebugWIRE.
 
-I prefer this way to program and debug low pin attiny MCUs. 
+I prefer this way to program and debug low pin attiny MCUs. If your target MCU support debugwire protocol, such as attiny13, you can program 'DWEN' FUSE bit to enable debugwire with any ISP programmer.
 
-If your target MCU support debugwire protocol, such as attiny13/85, you can set 'DWEN' FUSE bit to enable debugwire by any ISP programmer.
-
-**NOTE 1: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
-
-Usually, such a programmer is more expensive than a MCU chip. If you only have a USBASP/USBTINY ISP programmer, you must understand the satuation here before do anything. And I suggest buying another chip instead of buying a high-end programmer if you wan to use ISP again.
+**NOTE 1: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, if you want to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
 
 **NOTE 2: Never touch the 'RSTDISBL' FUSE bit (keep it 1 always), unless you really understand what you are doing and you really have a High Voltage programmer.**
 
 
 **4.2.1 program DWEN FUSE bit**
 
-If your target MCU support debugwire protocol, you can enable it and use debugwire protocol to program.
-
-Take attiny 13 as example, according to the datasheet of attiny13:
+Use attiny13 as example, according to the datasheet:
 
 ![screenshot-2022-05-29-14-30-31](https://user-images.githubusercontent.com/1625340/170855409-7c0eec2f-0811-4638-8506-188cc71e84ff.png)
 
@@ -198,7 +193,7 @@ the default value of hfuse is '0xff', and set it to '0xf7' means debugwire enabl
 sudo avrdude -c usbasp -p t13 -U hfuse:w:0xf7:m
 ```
 
-If you have AVR dragon and above programmer, you can disable debugwire by:
+If you have AVR dragon and above programmer, you can unprogram 'DWEN':
 
 ```
 sudo avrdude -c usbasp -p t13 -U hfuse:w:0xff:m
@@ -229,7 +224,8 @@ For convenient, I make a little board easy to fit my CH340 and FT2232 adapter:
 ```
 sudo dwdebug l ./main.elf,qr
 ```
-For more help of dwdebug, please refer to [dwdebug manual](https://github.com/dcwbrown/dwire-debug/blob/master/Manual.md).
+
+For more usage help of dwdebug, please refer to [dwdebug manual](https://github.com/dcwbrown/dwire-debug/blob/master/Manual.md).
 
 ## 4.3 with updiprog
 
