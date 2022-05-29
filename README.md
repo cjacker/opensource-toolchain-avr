@@ -362,6 +362,10 @@ Info : avrchip: hardware has something
 Use 'target remote :4444'
 ```
 
+All REPL command of dwdebug can be used as commandline argument, to launch gdbserver, you can also do it as:
+```
+$ dwdebug gdbserver
+```
 
 
 
