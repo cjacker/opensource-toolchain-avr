@@ -4,6 +4,7 @@ MCU_TYPE = attiny13
 # MCU_TYPE = attiny85
 # MCU_TYPE = attiny88
 # MCU_TYPE = atmega128
+# Arduino uno/nano
 # MCU_TYPE = atmega328p
 
 AVRGCC = avr-gcc
@@ -18,9 +19,9 @@ PROGRAMMER = usbasp
 DEBUGFLAGS=-g
 CFLAGS = $(DEBUGFLAGS) -Os 
 MFLAGS = -mmcu=$(MCU_TYPE)
-OBJCOPY_FLAGS = -R .eeprom
-
-AVRDUDE_FLAGS = -B4 -P usb
+OBJCOPY_FLAGS =
+# Some USBASP programmer may need -B settings 
+AVRDUDE_FLAGS = -B4
 
 ifneq (,$(findstring atmelice,$(PROGRAMMER)))
 AVRDUDE_FLAGS =
@@ -58,6 +59,7 @@ else ifeq ($(MCU_TYPE), attiny88)
 else ifeq ($(MCU_TYPE), atmega128)
 	avrdude -c $(PROGRAMMER) -p m128 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
 else ifeq ($(MCU_TYPE), atmega328p)
+# use USB cabel to program arduino directly.
 	avrdude -c arduino -p m328p -P /dev/ttyUSB0 -b 115200 -U flash:w:$(TARGET)
 endif
 
