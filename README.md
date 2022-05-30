@@ -136,7 +136,7 @@ After 'main.hex' generated, there are various way to program 'main.hex' to AVR M
 
 ## 4.1 with avrdude
 
-**NOTE:** if you use ATMEL-ICE as programmer, it does NOT supply power to target board, you have to supply power to the target board separately.
+**NOTE:** if you use Dragon/JTAG ICE/ATMEL-ICE as programmer, it does NOT supply power to target board, you have to supply power to the target board separately.
 
 As mentioned above, the software we mostly used to program AVR MCU is `avrdude`, it supports a lot of programmers include but not limited to usbasp, usbtinyisp, AVR Dragon, JTAG ICE/MKII/3, ATMEL-ICE and PICKIT4. It also can directly program Arduino with arduino bsl. The common usage of avrdude looks like as below.
 
