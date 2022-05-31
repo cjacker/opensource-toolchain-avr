@@ -16,48 +16,49 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 # 1. Hardware prerequist
 
 * AVR development board:
-  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino uno or nano)、attiny13(ISP and Debugwire)、atmega4808(UPDI)。
+  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino nano)、attiny13(ISP and debugwire)、atmega4808(UPDI)。
  
 * Programmer: 
-  + AVR ISP Programmer (either usbasp or usbtinyisp)
+  + AVR ISP Programmer (either usbasp or usbtiny)
   + Or an arduino uno/nano board (which can be turn to a ISP programer)
-  + Or CH340 USB to TTL adatper to support programming with debugwire/UPDI.
-  + High voltage debugwire and UPDI programmer to rescue your “bricked” device.
-  + All debugers mentioned below. 
+  + Or CH340 serial USB adatper to support programming with debugwire/UPDI.
+  + [Optional] Or High voltage debugwire and UPDI programmer to rescue your “bricked” device.
+  + Or All debugers mentioned below. 
 
 * Debugger: 
   + AVR JTAG ICE and above for JTAG
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
-  + or AVR JTAG ICE 3 or ATMEL ICE or PICKIT4 for JTAG/debugwire/UPDI etc.
-  + or USB to TTL adapter with a self-made adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug).
+  + or AVR JTAG ICE 3 / ATMEL ICE / PICKIT4 for all debugging protocol include UPDI
+  + or CH340 serial USB adapter with a self-made adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug).
  
 **NOTE:**
 
 - You'd better have an ISP programmer to program or change the FUSE bits.
 
-- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to enable DWEN(debugwire FUSE bit), but if you want to turn it off, you have to use AVR DRAGON/ICE MKII and above or you have a High-Voltage programmer. For UPDI, if you set the pin to GPIO, you have to use HV UPDI programmer to program it.
+- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin to GPIO, you have to use HV UPDI programmer to unprogram it.
 
-- Not all arduino but uno/nano and most other models are AVR board with atmega mcu and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
+- Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
-- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin(Debugwire pin for 328), you need modify the hardware to enable it (and do not do this).
+- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do this).
 
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version of ICE devices may lack of support for some protocols，The latest official ATMEL ICE is always the best choice except the price.
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version ICE devices may lack of support for some protocols，The latest official AVR ICE 3 or ATMEL ICE is always the best choice except the price.
-
-- Pickit4 also support all avr debug protocols include hv updi support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
-
+- Pickit4 also support all avr debug protocols include HV UPDI support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except avadude and [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
 
 # 2. Toolchain overview
 
 * Compiler: avr-gcc
 * SDK: avr-libc
-* Programer: avrdude/pyupdi/pymcuprog
-* Debugger: avarice/dwdebug/pyavrdbg, avr-gdb
-* Simulator: simavr.
+* Programer: avrdude/dwdebug/pyupdi/pymcuprog
+* Debugger: avarice/dwdebug/pyavrdbg and avr-gdb
+* [optional]Simulator: simavr.
 
 
 # 3. Compiler and SDK
-AVR has very good support from opensource community, the opensource toolchain consists of 'avr-binutils'(binary utilities), 'avr-gcc'(compiler), 'avr-libc'(c libraries), 'avrdude'(the programmer), 'avarice'(the debug bridge) and 'avr-gdb'(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped this packages, just install these packages via pkg management tools of your distribution.
+
+AVR has very good support from opensource community, the opensource toolchain consists of **avr-binutils**(binary utilities), **avr-gcc**(compiler), **avr-libc**(c libraries), **avrdude**(the programmer), **avarice**(the debug bridge) and **avr-gdb**(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped these packages, just install them with pkg management tools of your distribution.
+
+If you want to find a prebuilt toolchain, the AVR toolchain from Arduino IDE (at <ide dir>/hardware/tools/var) is the best choice.
 
 As usual, let's start with a blink example, below codes is well self-explained:
 
@@ -109,15 +110,17 @@ After 'main.hex' generated, there are various way to program 'main.hex' to AVR M
 
 ## 4.1 with avrdude
 
-**NOTE:** if you use Dragon/JTAG ICE/ATMEL-ICE as programmer, it does NOT supply power to target board, you have to supply power to the target board separately.
-
-As mentioned above, the software we mostly used to program AVR MCU is `avrdude`, it supports a lot of programmers include but not limited to usbasp, usbtinyisp, AVR Dragon, JTAG ICE/MKII/3, ATMEL-ICE and PICKIT4. It also can directly program Arduino with arduino bsl. The common usage of avrdude looks like as below.
+As mentioned above, the software we mostly used to program AVR MCU is `avrdude`, it supports almost all AVR programmers, and can directly program Arduino with arduino bsl. The common usage of avrdude looks like as below.
 
 To detect target MCU:
+  
 ```
 sudo avrdude -c <programmer> -p <target>
 ```
-
+  
+If you use AVR Dragon/JTAG ICE MKxx/ATMEL-ICE, you may need to supply power to target device seperately.
+  
+  
 To program target MCU:
 
 ```
@@ -128,7 +131,7 @@ The `<programer>` can be:
 * usbasp
 * usbtiny
 * atmelice/\_isp/\_dw/\_pdi/\_updi for ATMEL-ICE
-* ...
+* arduino
 
 The `<target>` can be:
 * m128 for atmega128
@@ -149,7 +152,7 @@ sudo avrdude -p help
 
 [dwdebug](https://github.com/dcwbrown/dwire-debug) is a simple stand-alone programmer and debugger for AVR processors that support DebugWIRE.
 
-I prefer this way to program and debug low pin attiny MCUs. If your target MCU support debugwire protocol, such as attiny13, you can program 'DWEN' FUSE bit to enable debugwire with any ISP programmer.
+I prefer this way to program and debug low pin attiny MCUs with debugwire. If your target MCU support debugwire protocol, such as attiny13, you can program 'DWEN' FUSE bit to enable debugwire with any ISP programmer.
 
 **NOTE 1: Any ISP programmer can program 'DWEN' FUSE bit, but after debugwire enabled, if you want to unprogram 'DWEN' FUSE bit, you have to use AVR Dragon/AVR JTAG ICE MKII and above, or HV ISP (supported by AVR Dragon).**
 
@@ -206,23 +209,24 @@ For more usage help of dwdebug, please refer to [dwdebug manual](https://github.
 
 With the self-made '4.7k serial adapter' (refer to above section), you can program UPDI with [pyupdi](https://github.com/mraardvark/pyupdi).
 
-Use Thinary nano 4808 as example:
+Use Thinary nano 4808 and blink demo as example:
+
 ```
 pyupdi -c /dev/ttyUSB0 -d atmega4808 -b 115200 -e  -f main.hex 
 ```
 
-
 ## 4.4 with pymcuprog
 
+to be written
 
-
+  
 # 5. Debugging
 
 ## 5.1 with avarice
 
 AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. It can support a lot of debugger devices, such as AVR JTAG ICE MKI/MKII/3, AVR Dragon and ATMEL-ICE etc.
 
-Up to this tutorial written, most linux distribution shipped avarice-2.13 by default, version 2.13 can not support ATMEL-ICE, if you use ATMEL-ICE, you can use this version: https://github.com/Florin-Popescu/avarice/
+Up to this tutorial written, most linux distribution shipped avarice-2.13 by default, version 2.13 can not support ATMEL-ICE, if you use ATMEL-ICE, you should use this version: https://github.com/Florin-Popescu/avarice/
 
 Build and install it:
 
@@ -239,19 +243,21 @@ After installed, the command you can use is `avarice-2.14`.
 Try run below command to find help information and determine the command args you should use according to your debugger hardware:
 
 ```
-avarice --help
+avarice-2.14 --help
 ```
 
-Using atmega128 as example, after programming with `avrdude`, wire up the debugger and target board correctly (usually, there are two 10pin header in your board, one is ISP and another one is JTAG), and open the terminal to luanch a avarice session,
+Using atmega128 as example, after programming with `avrdude`, wire up the debugger and target board correctly (usually, there are two 10pin headers in your board, one for ISP and another one is JTAG), and open the terminal to luanch a avarice session,
 
-For JTAG ICE, you may need to specify the port, here is /dev/ttyUSB0:
+For JTAG ICE, you may need to specify the port, here is '/dev/ttyUSB0':
 
 ```
 avarice-2.14 -j /dev/ttyUSB0 :3333
 ```
+  
 And the output looks like
+  
 ```
-AVaRICE version 2.13, May 24 2022 00:00:00
+AVaRICE version 2.14dev
 
 Defaulting JTAG bitrate to 250 kHz.
 
@@ -268,13 +274,13 @@ Waiting for connection on port 3333.
 For ATMEL-ICE, you should use:
 
 ```
-avarice-2.14 -4 --program --file ./main.elf :3333
+avarice-2.14 -4 :3333
 ```
 
 And the output looks like:
 
 ```
-AVaRICE version 2.14
+AVaRICE version 2.14dev
 
 Defaulting JTAG bitrate to 250 kHz.
 
@@ -304,16 +310,16 @@ Breakpoint 2 at 0xa4: file main.c, line 16.
 Continuing.
 ```
 
-**NOTE:** the process above use JTAG debug protocol. if the target use debugwire protocol, apply '-w' arg to avarice. if it's updi protocol, apply '-u' arg.
+**NOTE:** the above command is for JTAG debugging protocol, apply '-w' arg for debugwire and '-u' for UPDI.
 
 
 ## 5.2 with dwdebug
 
 For AVR MCU supporting debugwire protocol, you can use `dwdebug` with self-made CH340/FTx232 adapter mentioned above for debugging. dwdebug itself is a debugger can be used standalone, and it can also work as a bridge to avr-gdb.
 
-I prefer this way to debug some ATTINY models
+I prefer this way to debug some lowpin ATTINY models
 
-After program the target device with:
+Program the target device with:
 
 ```
 dwdebug l ./main.elf,qr
@@ -342,9 +348,11 @@ Use 'target remote :4444'
 ```
 
 All REPL command of dwdebug can be used as commandline argument, to launch gdbserver, you can also do it as:
+  
 ```
 $ dwdebug gdbserver
 ```
+
 
 
 # 6. how to update USBASP firmware
