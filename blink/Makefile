@@ -4,8 +4,15 @@ MCU_TYPE = attiny13
 # MCU_TYPE = attiny85
 # MCU_TYPE = attiny88
 # MCU_TYPE = atmega128
+
 # Arduino uno/nano
 # MCU_TYPE = atmega328p
+
+# Arduino nano every
+# MCU_TYPE = atmega4809
+
+# Thinary nano 4808
+# MCU_TYPE = atmega4808
 
 AVRGCC = avr-gcc
 AVRDUDE = avrdude
@@ -32,6 +39,15 @@ OBJCOPY_FLAGS =
 endif
  
 SRCS = main.c
+
+# For Arduino nano every and Thinary nano 4808
+
+ifneq (,$(findstring atmega480,$(MCU_TYPE)))
+SRCS = main_for_4808_4809.c
+PROGRAMMER=atmelice_updi
+AVRDUDE_FLAGS=
+endif
+
 
 TARGET = main.hex
 
@@ -61,6 +77,10 @@ else ifeq ($(MCU_TYPE), atmega128)
 else ifeq ($(MCU_TYPE), atmega328p)
 # use USB cabel to program arduino directly.
 	avrdude -c arduino -p m328p -P /dev/ttyUSB0 -b 115200 -U flash:w:$(TARGET)
+else ifeq ($(MCU_TYPE), atmega4808)
+	/usr/bin/avrdude -c $(PROGRAMMER) -p m4808 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
+else ifeq ($(MCU_TYPE), atmega4809)
+	/usr/bin/avrdude -c $(PROGRAMMER) -p m4809 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
 endif
 
 flash_debugwire:
