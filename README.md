@@ -51,7 +51,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 * Compiler: avr-gcc
 * SDK: avr-libc
-* Programer: avrdude/updiprog/pyupdi/pymcuprog
+* Programer: avrdude/pyupdi/pymcuprog
 * Debugger: avarice/dwdebug/pyavrdbg, avr-gdb
 * Simulator: simavr.
 
@@ -180,7 +180,7 @@ dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to
 ```                     
  +---------------------+                           +--------------------+
  |                 VCC +---------------------------+ VCC                |
- |                  TX +---+-----------------------+ DebugWire          |
+ |                  TX +---+-----------------------+ DebugWire/UPDI     |
  |                     |   |                       |                    |
  |  CH340/FTx232       |   R(4.7k)                 |   AVR Tiny device  |
  |                     |   |                       |                    |
@@ -202,7 +202,15 @@ sudo dwdebug l ./main.elf,qr
 
 For more usage help of dwdebug, please refer to [dwdebug manual](https://github.com/dcwbrown/dwire-debug/blob/master/Manual.md).
 
-## 4.3 with updiprog
+## 4.3 with pyupdi
+
+With the self-made '4.7k serial adapter' (refer to above section), you can program UPDI with [pyupdi](https://github.com/mraardvark/pyupdi).
+
+Use Thinary nano 4808 as example:
+```
+pyupdi -c /dev/ttyUSB0 -d atmega4808 -b 115200 -e  -f main.hex 
+```
+
 
 ## 4.4 with pymcuprog
 
