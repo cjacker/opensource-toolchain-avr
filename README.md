@@ -46,33 +46,6 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - Pickit4 also support all avr debug protocols include hv updi support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
 
-## Arduino pin map
-Arduino board names all pins from D0 to D13 and A0 to A7. the corresponding pin name of AVR you can use is listed as below table:
-
-| Arduino uno/nano pin name | atmega328 pin |
-|---------------------------|---------------|
-| D0                        | PD0           |
-| D1                        | PD1           |
-| D2                        | PD2           |
-| D3                        | PD3           |
-| D4                        | PD4           |
-| D5                        | PD5           |
-| D6                        | PD6           |
-| D7                        | PD7           |
-| D8                        | PB0           |
-| D9                        | PB1           |
-| D10                       | PB2           |
-| D11                       | PB3           |
-| D12                       | PB4           |
-| D13                       | PB5           |
-| A0                        | PC0           |
-| A1                        | PC1           |
-| A2                        | PC2           |
-| A3                        | PC3           |
-| A4                        | PC4           |
-| A5                        | PC5           |
-| A6                        | PC6           |
-| A7                        | PC7           |
 
 # 2. Toolchain overview
 
@@ -154,14 +127,16 @@ sudo avrdude -c <programmer> -p <target> -U flash:w:<hex file>
 The `<programer>` can be:
 * usbasp
 * usbtiny
-* atmelice/isp/dw/pdi/updi for ATMEL-ICE
+* atmelice/\_isp/\_dw/\_pdi/\_updi for ATMEL-ICE
 * ...
 
 The `<target>` can be:
 * m128 for atmega128
-* m328p for atmega328p
+* m328p for atmega328p (Arduino uno/nano)
 * t13 for attiny13
 * t85 for attiny85
+* m4808 for atmega4808 (Thinary nano 4808)
+* m4809 for atmega4809 (Arduino nano every)
 
 For all programmers and targets 'avrdude' can support, try run:
 
@@ -321,7 +296,7 @@ Breakpoint 2 at 0xa4: file main.c, line 16.
 Continuing.
 ```
 
-**NOTE:** the process above use JTAG debug protocol. if the target use debugwire protocol, apply '-w' arg to avarice. if it's updi protocol, apply '-p' arg.
+**NOTE:** the process above use JTAG debug protocol. if the target use debugwire protocol, apply '-w' arg to avarice. if it's updi protocol, apply '-u' arg.
 
 
 ## 5.2 with dwdebug
