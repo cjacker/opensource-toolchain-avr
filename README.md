@@ -358,12 +358,20 @@ $ dwdebug gdbserver
   
 
 # 6. how to make a debugwire FUSE rescue board
-According to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/, you can make a rescue board if you program DWEN to enable debugwire and want to use ISP later.
+
+According to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/, you can make a rescue board if you brick your attiny device. actually, it can be used to modify FUSE bit of attiny devices as you like.
   
-It use arduino uno/nano as conroller and the circuit diagram here:
+The rescue board use arduino uno/nano as conroller and the circuit diagram here:
+  
 ![rescue-fuse](https://user-images.githubusercontent.com/1625340/171389363-0e8bdd47-315d-4463-9b00-6b681ff43fa9.png)
 
-And upload below sketch to uno or nano:
+I suggest to make a board permanently and I make one looks like:
+
+<img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="70%"/>
+
+'5V (2)' and 'GND (2)' are for seperated power supply which will be used to convert to 12V, the current of 12v output should less than 500ma, usually, it's safe to use a 5V-1A charger.
+  
+Then upload below sketch to uno or nano:
 
 ```
  // AVR High-voltage Serial Fuse Reprogrammer
@@ -529,7 +537,8 @@ And upload below sketch to uno or nano:
  }
 
 ```
-After upload the sketch, open serial monitor of arduino IDE, set baudrate to 19200 and no line ending and wire up as circuit diagram indicated.
+
+After upload the sketch, open 'serial monitor' of arduino IDE and set baudrate to 19200/no line ending, or use `minicom -b 19200 -D /dev/ttyUSB0`, wire up as circuit diagram indicated.
                 
 When you get the msg:
 ```
@@ -560,10 +569,6 @@ Reading complete..
 
 ```                
 
-I suggest to make this board permanent and I make one looks like:
-<img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="70%"/>
-
-'5V (2)' and 'GND (2)' means seperated power supply will be used to convert to 12V.
 
 # 7. how to update USBASP firmware
 
