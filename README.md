@@ -35,7 +35,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - You'd better have an ISP programmer to program or change the FUSE bits.
 
-- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin to GPIO, you have to use HV UPDI programmer to unprogram it.
+- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin to GPIO, you have to use HV UPDI programmer to unprogram it. for attiny FUSE rescue, please refer to the section "how to make a debugwire FUSE rescue board". 
 
 - Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
 
@@ -365,11 +365,11 @@ The rescue board use arduino uno/nano as conroller and the circuit diagram here:
   
 ![rescue-fuse](https://user-images.githubusercontent.com/1625340/171389363-0e8bdd47-315d-4463-9b00-6b681ff43fa9.png)
 
-I suggest to make a board permanently and I make one looks like:
+I suggest to make a board permanently and I make one looks like (with a 5v to 12v convertor):
 
 <img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="70%"/>
 
-'5V (2)' and 'GND (2)' are for seperated power supply which will be used to convert to 12V, the current of 12v output should less than 500ma, usually, it's safe to use a 5V-1A charger.
+'5V (2)' and 'GND (2)' are for seperated power supply to 5v to 12v convertor, the current of 12v output should less than 500ma, usually it's safe to use a 5V-1A charger.
   
 Then upload below sketch to uno or nano:
 
