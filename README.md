@@ -561,8 +561,9 @@ Reading complete..
 ```                
 
 I suggest to make this board permanent and I make one looks like:
-<img src="https://user-images.githubusercontent.com/1625340/171392615-ab2fda2d-ad01-4fd6-af08-dcc081d550ec.png"  width="70%"/>
-
+<img src="https://user-images.githubusercontent.com/1625340/171393509-91b495ce-4748-45ff-a7d9-3a496db2c373.png"  width="70%"/>
+   
+'5V (2)' and 'GND (2)' means seperated power supply will be used to convert to 12V.
 
 # 6. how to update USBASP firmware
 
