@@ -561,20 +561,20 @@ Reading complete..
 ```                
 
 I suggest to make this board permanent and I make one looks like:
-<img src="https://user-images.githubusercontent.com/1625340/171393509-91b495ce-4748-45ff-a7d9-3a496db2c373.png"  width="70%"/>
-   
+<img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="70%"/>
+
 '5V (2)' and 'GND (2)' means seperated power supply will be used to convert to 12V.
 
-# 6. how to update USBASP firmware
+# 7. how to update USBASP firmware
 
 If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow this guide:
 
-**6.1. Download the USBASP firmware**
+**7.1. Download the USBASP firmware**
 
 Download the firmware from https://www.fischl.de/usbasp/, the lastest version is "https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz". there are 3 hex files in 'bin/firmware' dir, choose the one according to your usbasp adapter. since most of them is atmega8, that's to say, you should use "usbasp.atmega8.2011-05-28.hex" for atmega8.
 
 
-**6.2. Prepare another workable ISP progammer**
+**7.2. Prepare another workable ISP progammer**
 
 To flash the new firmware onto the target atmega8, we need another ISP programmer. either usbasp adapter or usbtinyisp adapter or arduino board is OK.
 
@@ -587,7 +587,7 @@ If you use arduino as ISP programmer, you need:
 
 It will turn your arduino board to ISP programmer.
 
-**6.3. Gain control of the chip's RESET pin**
+**7.3. Gain control of the chip's RESET pin**
 
 The 'RESET' pin of the ISP header on usbasp adapter need to be updated is not connect to the atmega8 chip's RESET pin, thus you can not program the adapter until gain control of the chip's RESET pin.
 
@@ -605,7 +605,7 @@ If you have such a programmer need to be updated, you have to solder a wire to t
 
 ![atmega8-pin](https://user-images.githubusercontent.com/1625340/170304456-496d3b60-cc4b-4109-b1e4-f1ad015040f0.png)
 
-**6.4. Wire up ISP programmer and target usbasp adapter**
+**7.4. Wire up ISP programmer and target usbasp adapter**
 
 If you have another usbasp or usbtinyisp programmer, just wire them up as usual. If there is no JP2 jumper on board, you need connect the programmer's RESET pin directly to target atmega8 chip's RESET pin.
 
@@ -618,7 +618,7 @@ If you use arduino as ISP programmer, you need connect the Arduino to target usb
 * Arduino D11 to target MOSI
 * Arduino D10 to target RESET(if has JP2 jumper) or to the wire from target chip's PIN 29.
 
-**6.5. Detect the target adapter**
+**7.5. Detect the target adapter**
 
 Run:
 
@@ -648,7 +648,7 @@ to use arduino as ISP programmer, you need to use `<Where your Arduino IDE>/hard
 avrdude -C <Where your Arduino IDE>/hardware/tools/avr/etc/avrdude.conf -p m8 -c avrisp -P /dev/ttyUSB0
 ```
 
-**6.6. Finally, update the firmwire**
+**7.6. Finally, update the firmwire**
 With a working connection to the target ATmega8,
 
 ```
