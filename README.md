@@ -220,8 +220,63 @@ pyupdi -c /dev/ttyUSB0 -d atmega4808 -b 115200 -e  -f main.hex
 ```
 
 ## 4.4 with pymcuprog
+pymcuprog is a Python utility for programming various Microchip MCU devices using Microchip CMSIS-DAP based debuggers.
 
-to be written
+pymcuprog is primarily intended for use with PKOB nano (nEDBG) debuggers which are found on Curiosity Nano kits and other development boards. This means that it is continuously tested with a selection of AVR devices with UPDI interface as well as a selection of PIC devices. However since the protocol is compatible between all EDBG-based debuggers (pyedbglib) it is possible to use pymcuprog with a wide range of debuggers and devices, although not all device families/interfaces have been implemented.
+
+**pymcuprog supports:**
+
+* PKOB nano (nEDBG) - on-board debugger on Curiosity Nano
+* MPLAB PICkit 4 In-Circuit Debugger (when in 'AVR mode')
+* MPLAB Snap In-Circuit Debugger (when in 'AVR mode')
+* Atmel-ICE
+* Power Debugger
+* EDBG - on-board debugger on Xplained Pro/Ultra
+* mEDBG - on-board debugger on Xplained Mini/Nano
+* JTAGICE3 (firmware version 3.0 or newer)
+
+
+**Install using pip from pypi:**
+
+```
+pip install pymcuprog
+```
+
+**Usage:**
+
+Test connectivity by reading the device ID:
+```
+pymcuprog ping
+```
+
+Erase memories then write contents of an Intel(R) hex file to flash using Curiosity Nano (pymcuprog does NOT automatically erase before writing):
+```
+pymcuprog erase
+pymcuprog write -f app.hex
+```
+
+Erase memories and write an Intel hex file (using the --erase switch):
+```
+pymcuprog write -f app.hex --erase
+```
+
+Erase memories, write an Intel hex file and verify the content:
+```
+pymcuprog write -f app.hex --erase --verify
+```
+
+
+Pymcuprog also support self-made '4.7k serial adapter' (refer to above section), 
+
+For example: checks connectivity by reading the device identity:
+```
+pymcuprog ping -d atmega4808 -t uart -u /dev/ttyUSB0
+```
+
+Erase and write:
+```
+pymcuprog -t uart -d atmega4808 -u /dev/ttyUSB0 write -f main.hex --erase --verify
+```
 
   
 # 5. Debugging
