@@ -52,7 +52,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 * Compiler: avr-gcc
 * SDK: avr-libc
 * Programer: avrdude/dwdebug/pyupdi/pymcuprog
-* Debugger: avarice/dwdebug/pyavrdbg and avr-gdb
+* Debugger: avarice/dwdebug/bloom and avr-gdb
 * [optional]Simulator: simavr.
 
 
@@ -410,6 +410,66 @@ All REPL command of dwdebug can be used as commandline argument, to launch gdbse
   
 ```
 $ dwdebug gdbserver
+```
+
+
+## 5.3 with bloom
+
+Bloom implements a number of user-space device drivers, enabling support for many debug tools (such as the Atmel-ICE, Power Debugger, MPLAB SNAP, etc). Bloom exposes an interface to the connected target, via a GDB RSP server. This allows any IDE with GDB RSP client capabilities to interface with Bloom and gain full access to the target.
+
+Currently, Bloom only supports AVR8 targets from Microchip. Bloom was designed to accommodate targets from different families and architectures. Support for other target families will be considered as and when requested.
+
+You can download the prebuilt binary release from https://bloom.oscillate.io, it provides deb and rpm packages.
+
+After installed, in your project dir, run:
+
+```
+bloom init
+```
+
+A 'bloom.json' will be generated, you need to modify this file to match your target, use thinary nano 4808 as example, 'bloom.json' should be:
+
+```
+{
+  "environments": {
+    "default": {
+      "debugTool": {
+        "name": "atmel-ice",
+        "releasePostDebugSession": true
+      },
+
+      "target": {
+        "name": "atmega4808",
+        "physicalInterface": "updi"
+      },
+
+      "debugServer": {
+        "name": "avr-gdb-rsp",
+        "ipAddress": "127.0.0.1",
+        "port": "1442"
+      }
+    }
+  },
+
+  "insight": {
+    "enabled": true
+  }
+}
+```
+
+And then run `bloom`, the output looks like:
+
+<img src="https://user-images.githubusercontent.com/1625340/171673137-2885e208-6b90-4acf-ba07-f7a09e328fff.png" width="50%"/>
+
+And the insight window also start but will not show useful information until avr-gdb connected.
+
+<img src="https://user-images.githubusercontent.com/1625340/171673776-e7b1bec6-b5e9-48bf-b133-ff9a45dc0a2d.png" width="50%"/>
+
+Then you can launch a avr-gdb session with:
+
+```
+$ avr-gdb
+(gdb) target remote :1442
 ```
 
 # 6. how to make a debugwire FUSE rescue board
