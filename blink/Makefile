@@ -79,6 +79,10 @@ else ifeq ($(MCU_TYPE), atmega328p)
 	avrdude -c arduino -p m328p -P /dev/ttyUSB0 -b 115200 -U flash:w:$(TARGET)
 else ifeq ($(MCU_TYPE), atmega4808)
 	/usr/bin/avrdude -c $(PROGRAMMER) -p m4808 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
+# pymcuprog with CH340 and self-made 4.7k resistor adapter:
+#~/.local/bin/pymcuprog -t uart -d atmega4808 -u /dev/ttyUSB0 write -f main.hex --erase --verify
+# pyupdi with CH340 and self-made 4.7k resistor adapter:
+#./pyupdi -d atmega4808 -e -b 115200 main.hex -c /dev/ttyUSB0
 else ifeq ($(MCU_TYPE), atmega4809)
 	/usr/bin/avrdude -c $(PROGRAMMER) -p m4809 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
 endif
