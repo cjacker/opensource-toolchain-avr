@@ -13,6 +13,7 @@ Maybe, the most famous development board using AVR is Arduino. Arduino is an AVR
 
 This tutorial is not a tutorial for Arduino development, it's for AVR opensource toolchain.
 
+
 # 1. Hardware prerequist
 
 * AVR development board:
@@ -45,6 +46,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - Pickit4 also support all avr debug protocols include HV UPDI support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except avadude and [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
 
+
 # 2. Toolchain overview
 
 * Compiler: avr-gcc
@@ -58,7 +60,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 AVR has very good support from opensource community, the opensource toolchain consists of **avr-binutils**(binary utilities), **avr-gcc**(compiler), **avr-libc**(c libraries), **avrdude**(the programmer), **avarice**(the debug bridge) and **avr-gdb**(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped these packages, just install them with pkg management tools of your distribution.
 
-If you want to find a prebuilt toolchain, the AVR toolchain from Arduino IDE (at <ide dir>/hardware/tools/var) is the best choice.
+If you want to find a prebuilt toolchain, the AVR toolchain from Arduino IDE (at `<ide dir>/hardware/tools/var`) is the best choice.
 
 As usual, let's start with a blink example, below codes is well self-explained:
 
@@ -158,7 +160,7 @@ I prefer this way to program and debug low pin attiny MCUs with debugwire. If yo
 
 **NOTE 2: Never touch the 'RSTDISBL' FUSE bit (keep it 1 always), unless you really understand what you are doing and you really have a High Voltage programmer.**
 
-**NOTE 3: If you do not have any HV programmer, you can made a rescue board to restore the FUSE bit according to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/.
+**NOTE 3: If you do not have any HV programmer, you can made a rescue board to restore the FUSE bit according to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/.**
 
 
 **4.2.1 program DWEN FUSE bit**
@@ -354,8 +356,6 @@ All REPL command of dwdebug can be used as commandline argument, to launch gdbse
 ```
 $ dwdebug gdbserver
 ```
-
-  
 
 # 6. how to make a debugwire FUSE rescue board
 
@@ -569,17 +569,24 @@ Reading complete..
 
 ```                
 
+# 7. how to make your own HV UPDI programer
+I did not try it since already have a HV UPDI programer, if you want to give a try, please refer to:
 
-# 7. how to update USBASP firmware
+https://www.electronics-lab.com/diy-arduino-nano-hv-updi-programmer/
+
+
+I thought the above solution of HV debugwire rescue adapter can be used as a HV UPDI rescue adapter with code modification for UPDI protocol, but not try up to now.
+
+# 8. how to update USBASP firmware
 
 If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow this guide:
 
-**7.1. Download the USBASP firmware**
+**8.1. Download the USBASP firmware**
 
 Download the firmware from https://www.fischl.de/usbasp/, the lastest version is "https://www.fischl.de/usbasp/usbasp.2011-05-28.tar.gz". there are 3 hex files in 'bin/firmware' dir, choose the one according to your usbasp adapter. since most of them is atmega8, that's to say, you should use "usbasp.atmega8.2011-05-28.hex" for atmega8.
 
 
-**7.2. Prepare another workable ISP progammer**
+**8.2. Prepare another workable ISP progammer**
 
 To flash the new firmware onto the target atmega8, we need another ISP programmer. either usbasp adapter or usbtinyisp adapter or arduino board is OK.
 
@@ -592,7 +599,7 @@ If you use arduino as ISP programmer, you need:
 
 It will turn your arduino board to ISP programmer.
 
-**7.3. Gain control of the chip's RESET pin**
+**8.3. Gain control of the chip's RESET pin**
 
 The 'RESET' pin of the ISP header on usbasp adapter need to be updated is not connect to the atmega8 chip's RESET pin, thus you can not program the adapter until gain control of the chip's RESET pin.
 
@@ -610,7 +617,7 @@ If you have such a programmer need to be updated, you have to solder a wire to t
 
 ![atmega8-pin](https://user-images.githubusercontent.com/1625340/170304456-496d3b60-cc4b-4109-b1e4-f1ad015040f0.png)
 
-**7.4. Wire up ISP programmer and target usbasp adapter**
+**8.4. Wire up ISP programmer and target usbasp adapter**
 
 If you have another usbasp or usbtinyisp programmer, just wire them up as usual. If there is no JP2 jumper on board, you need connect the programmer's RESET pin directly to target atmega8 chip's RESET pin.
 
@@ -623,7 +630,7 @@ If you use arduino as ISP programmer, you need connect the Arduino to target usb
 * Arduino D11 to target MOSI
 * Arduino D10 to target RESET(if has JP2 jumper) or to the wire from target chip's PIN 29.
 
-**7.5. Detect the target adapter**
+**8.5. Detect the target adapter**
 
 Run:
 
@@ -653,7 +660,7 @@ to use arduino as ISP programmer, you need to use `<Where your Arduino IDE>/hard
 avrdude -C <Where your Arduino IDE>/hardware/tools/avr/etc/avrdude.conf -p m8 -c avrisp -P /dev/ttyUSB0
 ```
 
-**7.6. Finally, update the firmwire**
+**8.6. Finally, update the firmwire**
 With a working connection to the target ATmega8,
 
 ```
