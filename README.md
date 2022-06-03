@@ -687,10 +687,11 @@ Reading complete..
 # 7. how to make your own HV UPDI programer
 I did not try it since already have a HV UPDI programer, if you want to give a try, please refer to:
 
-https://www.electronics-lab.com/diy-arduino-nano-hv-updi-programmer/
-
-
-I thought the above solution of HV debugwire rescue adapter can be used as a HV UPDI rescue adapter with code modification for UPDI protocol, but not try up to now.
+https://github.com/Dlloydev/jtag2updi/wiki/Arduino-Nano-HV-UPDI-Programmer
+https://github.com/Dlloydev/jtag2updi/wiki/DIY-AVR132DA-HV-UPDI-Programmer
+https://github.com/Dlloydev/jtag2updi/wiki/DIY-ATmega4809-HV-UPDI-Programmer
+https://github.com/Dlloydev/jtag2updi/wiki/DIY-ATtiny-HV-UPDI-Programmer
+https://github.com/Dlloydev/jtag2updi/wiki/DIY-HV-UPDI-Programmer
 
 # 8. how to update USBASP firmware
 
