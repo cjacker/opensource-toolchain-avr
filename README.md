@@ -187,11 +187,11 @@ dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to
 ```                     
  +---------------------+                           +--------------------+
  |                 VCC +---------------------------+ VCC                |
- |                  TX +---+-----------------------+ DebugWire/UPDI     |
+ |                  RX +---+-----------------------+ DebugWire/UPDI     |
  |                     |   |                       |                    |
  |  CH340/FTx232       |   R(4.7k)                 |   AVR Tiny device  |
  |                     |   |                       |                    |
- |                  RX +---+                       |                    |    
+ |                  TX +---+                       |                    |    
  |                     |                           |                    |
  |                 GND +---+-----------------------+ GND                | 
  +---------------------+                           +--------------------+
