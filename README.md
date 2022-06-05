@@ -687,11 +687,35 @@ Reading complete..
 # 7. how to make your own HV UPDI programer
 I did not try it since already have a HV UPDI programer, if you want to give a try, please refer to:
 
+**UPDI High-Voltage Activation Information:**
+
+https://microchipdeveloper.com/mplabx:avr-updi-info
+
+**High voltage JTAG2UPDI:**
+
 https://github.com/Dlloydev/jtag2updi/wiki/Arduino-Nano-HV-UPDI-Programmer
 https://github.com/Dlloydev/jtag2updi/wiki/DIY-AVR132DA-HV-UPDI-Programmer
 https://github.com/Dlloydev/jtag2updi/wiki/DIY-ATmega4809-HV-UPDI-Programmer
 https://github.com/Dlloydev/jtag2updi/wiki/DIY-ATtiny-HV-UPDI-Programmer
 https://github.com/Dlloydev/jtag2updi/wiki/DIY-HV-UPDI-Programmer
+
+**HV Serial UPDI:**
+
+This is the simplest way to build a self-made HV UPDI programmer, it's a very smart design, and use UART hardwire flow control to send the 12V pulse.
+
+https://www.tindie.com/products/leonerd/avr-updi-programmer-with-12v/
+
+<img src="https://user-images.githubusercontent.com/1625340/172050880-6eea0609-d28f-437b-a38e-111821524b69.png" width="40%"/>
+
+
+Another design:
+
+https://www.reddit.com/r/PrintedCircuitBoard/comments/rc81te/review_request_usb_updi_programmer_with_12v_pulse/
+
+<img src="https://user-images.githubusercontent.com/1625340/172050889-e8019066-f63d-47fb-a321-0d6407829559.jpeg" width="40%"/>
+
+<img src="https://user-images.githubusercontent.com/1625340/172050894-ef096f77-875d-4688-83fc-ba562e85b5be.jpeg" width="40%" />
+
 
 # 8. how to update USBASP firmware
 
