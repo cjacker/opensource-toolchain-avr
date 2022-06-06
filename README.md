@@ -5,29 +5,31 @@ AVR is a family of modified Harvard architecture 8-bit RISC microcontrollers, it
 The architecture of AVR was developed by Alf-Egil Bogen and Vegard Wollan. AVR derives its name from its developers and stands for Alf-Egil Bogen Vegard Wollan RISC microcontroller, also known as Advanced Virtual RISC. The AT90S8515 was the first microcontroller which was based on AVR architecture.
 
 AVR microcontrollers are available in three categories:
+
 - TinyAVR – Less memory, small size, suitable only for simpler applications
 - MegaAVR – These are the most popular ones having good amount of memory (upto 256 KB), higher number of inbuilt peripherals and suitable for moderate to complex applications.
+- AVR Dx – The AVR Dx family is featuring multiple microcontroller series, focused on HCI, analog signal conditioning and functional safety. 
 - XmegaAVR – Used commercially for complex applications, which require large program memory and high speed.
 
-Maybe, the most famous development board using AVR is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. 
+For more info about AVR, please refer to https://en.wikipedia.org/wiki/AVR_microcontrollers.
 
-This tutorial is not a tutorial for Arduino development, it's for AVR opensource toolchain.
+Maybe the most famous development board using AVR is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. This tutorial is not for Arduino development, it's for AVR opensource toolchain.
 
 
 # 1. Hardware prerequist
 
 * AVR development board:
-  + This tutorial will use atmega128(ISP and JTAG)、atmega328(Arduino nano)、attiny13(ISP and debugwire)、atmega4808(UPDI)。
+  + This tutorial will use various models of AVR include atmega128(ISP and JTAG)、atmega328p(Arduino nano)、attiny13/85(ISP and debugwire)、attiny806(UPDI) and atmega4808/4809(UPDI), etc.
  
 * Programmer: 
-  + AVR ISP Programmer (either usbasp or usbtiny)
+  + ISP Programmer (either usbasp or usbtiny)
   + Or an arduino uno/nano board (which can be turn to a ISP programer)
-  + Or CH340 serial USB adatper to support programming with debugwire/UPDI.
+  + Or CH340 serial adatper with a self-made adapter to support programming with debugwire/UPDI.
   + [Optional] Or High voltage debugwire and UPDI programmer to rescue your “bricked” device.
   + Or All debugers mentioned below. 
 
 * Debugger: 
-  + AVR JTAG ICE and above for JTAG (about 10 of the oldest model of AVR has JTAG support)
+  + AVR JTAG ICE and above for JTAG (only about 10 of the oldest model of AVR has JTAG support, such as M128)
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 / ATMEL ICE / PICKIT4 for all debugging protocol include UPDI
   + or CH340 serial USB adapter with a self-made 4.7k adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug). **and this is the only complete opensource debugging solution for AVR.**
@@ -36,15 +38,17 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 - You'd better have an ISP programmer to program or change the FUSE bits.
 
-- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin to GPIO, you have to use HV UPDI programmer to unprogram it. for attiny FUSE rescue, please refer to the section "how to make a debugwire FUSE rescue board". 
+- Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin as GPIO, you have to use HV UPDI programmer to unprogram it. please refer to the section "how to make a debugwire FUSE rescue board" and "how to make your own HV UPDI programer". 
 
-- Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy ISP programmer anymore.
+- Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire adapter required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy a new ISP programmer.
 
 - Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do this).
 
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version of ICE devices may lack of support for some protocols，The latest official ATMEL ICE is always the best choice except the price.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version of ICE devices may lack of support for some protocols，The latest official ATMEL-ICE is always the best choice except the price.
 
-- Pickit4 also support all avr debug protocols include HV UPDI support (which is not supported by ATMEL-ICE) after atmel was acquired by microchip, but lack of good opensource support except avadude and [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. 
+- PICKIT-4 supports all AVR debug protocols include HV UPDI support (which is not supported by ATMEL-ICE), but lack of good opensource support except avadude and [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. It's not necessary to buy a very-expensive PICKIT-4 if you only need to program AVR.
+
+- There is no opensource hardware/firmware which can support UPDI debugging up to now, you have to buy a commercial debugger such as ATMEL-ICE.
 
 
 # 2. Toolchain overview
@@ -60,7 +64,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
 
 AVR has very good support from opensource community, the opensource toolchain consists of **avr-binutils**(binary utilities), **avr-gcc**(compiler), **avr-libc**(c libraries), **avrdude**(the programmer), **avarice**(the debug bridge) and **avr-gdb**(the debugger). it's not necessary to build the toolchain yourself, since almost every linux distribution shipped these packages, just install them with pkg management tools of your distribution.
 
-If you want to find a prebuilt toolchain, the AVR toolchain from Arduino IDE (at `<ide dir>/hardware/tools/var`) is the best choice.
+If you want to find a prebuilt toolchain, the AVR toolchain from Arduino IDE (located at `<arduino ide dir>/hardware/tools/avr/`) is the best choice.
 
 As usual, let's start with a blink example, below codes is well self-explained:
 
@@ -105,10 +109,12 @@ You should change the `<MCU TYPE>` according to your board. for mcu type avr-gcc
 
 The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' defined in 'Makefile'.
 
+**NOTE: there is a lot of tutotial use `-R .eeprom` with avr-objcopy, it's meaningless for this example."
+
 
 # 4. Programming
 
-After 'main.hex' generated, there are various way to program 'main.hex' to AVR MCU. 
+After 'main.hex' generated, there are various way to program 'main.hex' to AVR MCU. it depend on which protocol your AVR MCU supported and which adapter you use.
 
 ## 4.1 with avrdude
 
@@ -183,20 +189,11 @@ sudo avrdude -c usbasp -p t13 -U hfuse:w:0xff:m
 
 **4.2.2 prepare the hardware**
 
-dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to the DebugWIRE pin(the RESET pin now is debugwire pin), and TX connected through a 4.7k resistor to RX.
-```                     
- +---------------------+                           +--------------------+
- |                 VCC +---------------------------+ VCC                |
- |                  RX +---+-----------------------+ DebugWire/UPDI     |
- |                     |   |                       |                    |
- |  CH340/FTx232       |   R(4.7k)                 |   AVR Tiny device  |
- |                     |   |                       |                    |
- |                  TX +---+                       |                    |    
- |                     |                           |                    |
- |                 GND +---+-----------------------+ GND                | 
- +---------------------+                           +--------------------+
-```
-                         
+dwdebug uses an FT232R or CH340 USB serial adapter with RX connected directly to the DebugWIRE pin(the RESET pin now is debugwire pin), and TX connected through a 4.7k resistor to RX. you can also use a diode such as 1n914/1n4148/1n5819 or just a zener diode.
+
+
+<img src="https://user-images.githubusercontent.com/1625340/172144168-d786ebbf-3e70-4739-b57f-7fbe1745a7ad.png" width="50%"/>
+
 For convenient, I make a little board easy to fit my CH340 and FT2232 adapter:
 
 <img src="https://user-images.githubusercontent.com/1625340/170856074-ef342ae1-792f-413e-91f0-3448a62a5bfe.png" width="50%"/>
@@ -283,7 +280,7 @@ pymcuprog -t uart -d atmega4808 -u /dev/ttyUSB0 write -f main.hex --erase --veri
 
 ## 5.1 with avarice
 
-AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. It can support a lot of debugger devices, such as AVR JTAG ICE MKI/MKII/3, AVR Dragon and ATMEL-ICE etc.
+AVaRICE is a program which interfaces the GNU Debugger GDB with the AVR JTAG ICE available from Atmel. It can support a lot of official debugger devices, such as AVR JTAG ICE MKI/MKII/3, AVR Dragon and ATMEL-ICE etc.
 
 Up to this tutorial written, most linux distribution shipped avarice-2.13 by default, version 2.13 can not support ATMEL-ICE, if you use ATMEL-ICE, you should use this version: https://github.com/Florin-Popescu/avarice/
 
