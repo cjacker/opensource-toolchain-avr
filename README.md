@@ -708,7 +708,7 @@ https://www.reddit.com/r/PrintedCircuitBoard/comments/rc81te/review_request_usb_
 
 And I draw a very simple circuit here, for 12V source, you can use LTC1262CN8 (DIP8)/MAX662 or a 5v to 12 boost.
 
-<img src="https://user-images.githubusercontent.com/1625340/172089371-d1d47e89-4767-4815-ad90-46ddf40d4876.png" width="50%"/>
+<img src="https://user-images.githubusercontent.com/1625340/172159060-1cd4196b-cedc-47e0-9750-fb3db0600d7e.png" width="50%"/>
 
 
 **High voltage JTAG2UPDI (not recommended):**
