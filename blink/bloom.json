@@ -1,0 +1,25 @@
+{
+  "environments": {
+    "default": {
+      "debugTool": {
+        "name": "atmel-ice",
+        "releasePostDebugSession": true
+      },
+
+      "target": {
+        "name": "atmega4808",
+        "physicalInterface": "updi"
+      },
+
+      "debugServer": {
+        "name": "avr-gdb-rsp",
+        "ipAddress": "127.0.0.1",
+        "port": "1442"
+      }
+    }
+  },
+
+  "insight": {
+    "enabled": true
+  }
+}

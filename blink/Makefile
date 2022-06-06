@@ -82,7 +82,7 @@ else ifeq ($(MCU_TYPE), atmega4808)
 # pymcuprog with CH340 and self-made 4.7k resistor adapter:
 #~/.local/bin/pymcuprog -t uart -d atmega4808 -u /dev/ttyUSB0 write -f main.hex --erase --verify
 # pyupdi with CH340 and self-made 4.7k resistor adapter:
-#./pyupdi -d atmega4808 -e -b 115200 main.hex -c /dev/ttyUSB0
+#./pyupdi -d atmega4808 -e -b 115200 -f main.hex -c /dev/ttyUSB0
 else ifeq ($(MCU_TYPE), atmega4809)
 	/usr/bin/avrdude -c $(PROGRAMMER) -p m4809 $(AVRDUDE_FLAGS) -U flash:w:$(TARGET)
 endif
@@ -91,4 +91,4 @@ flash_debugwire:
 	dwdebug l ./main.elf,qr
 
 clean:
-	rm -f $(OBJECTS) main.elf main.hex
+	rm -f $(OBJECTS) *.o main.elf main.hex
