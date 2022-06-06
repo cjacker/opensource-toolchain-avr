@@ -27,7 +27,7 @@ This tutorial is not a tutorial for Arduino development, it's for AVR opensource
   + Or All debugers mentioned below. 
 
 * Debugger: 
-  + AVR JTAG ICE and above for JTAG
+  + AVR JTAG ICE and above for JTAG (about 10 of the oldest model of AVR has JTAG support)
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 / ATMEL ICE / PICKIT4 for all debugging protocol include UPDI
   + or CH340 serial USB adapter with a self-made 4.7k adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug). **and this is the only opensource debugging tool for AVR.**
