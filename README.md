@@ -32,7 +32,7 @@ Maybe the most famous development board using AVR is Arduino. Arduino is an AVR 
   + AVR JTAG ICE and above for JTAG (only about 10 of the oldest model of AVR has JTAG support, such as M128)
   + or AVR JTAG ICE MKII and above for JTAG/debugwire
   + or AVR JTAG ICE 3 / ATMEL ICE / PICKIT4 for all debugging protocol include UPDI
-  + or CH340 serial USB adapter with a self-made 4.7k adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug). **and this is the only complete opensource debugging solution for AVR.**
+  + or CH340 serial USB adapter with a self-made 4.7k adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug). **and this is the only complete opensource(include hardware and software) debugging solution for AVR.**
 
 **NOTE:**
 
