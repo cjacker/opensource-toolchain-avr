@@ -475,11 +475,16 @@ According to https://www.electronics-lab.com/recover-bricked-attiny-using-arduin
   
 The rescue board use arduino uno/nano as conroller and the circuit diagram here:
   
-![rescue-fuse](https://user-images.githubusercontent.com/1625340/171389363-0e8bdd47-315d-4463-9b00-6b681ff43fa9.png)
+<img src="https://user-images.githubusercontent.com/1625340/171389363-0e8bdd47-315d-4463-9b00-6b681ff43fa9.png" width="50%"/>
 
-I suggest to make a board permanently and I make one looks like (with a 5v to 12v convertor):
+I suggest to make a board permanently and I make one with a 5v to 12v boost:
 
-<img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="70%"/>
+<img src="https://user-images.githubusercontent.com/1625340/171394141-1c7098a8-f603-461a-9cb0-75018a45c980.png"  width="50%"/>
+
+and the second version with LTC1262CN8 or MAX662A and a arduino nano dock:
+
+<img src="https://user-images.githubusercontent.com/1625340/172346261-c572c99e-f601-424f-aa4c-22d95d8b2cd2.jpg" width="50%"/>
+
 
 '5V (2)' and 'GND (2)' are for seperated power supply to 5v to 12v convertor, the current of 12v output should less than 500ma, usually it's safe to use a 5V-1A charger.
   
