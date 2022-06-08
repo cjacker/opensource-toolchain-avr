@@ -11,6 +11,16 @@
 #define SDI 9 // Target Data Input
 #define VCC 8 // Target VCC
 
+/*
+// to match my own board, all these pins in same side of nano
+#define SCI 12 // Target Clock Input
+#define SDI 11 // Target Data Input
+#define SII 10 // Target Instruction Input
+#define SDO 9 // Target Data Output
+#define VCC 8 // Target VCC
+#define RST 4 // Output to level shifter for !RESET from transistor
+*/
+
 #define HFUSE 0x747C
 #define LFUSE 0x646C
 #define EFUSE 0x666E
