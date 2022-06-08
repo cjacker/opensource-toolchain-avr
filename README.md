@@ -15,7 +15,6 @@ For more info about AVR, please refer to https://en.wikipedia.org/wiki/AVR_micro
 
 Maybe the most famous development board using AVR is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. This tutorial is not for Arduino development, it's for AVR opensource toolchain.
 
-
 # 1. Hardware prerequist
 
 * AVR development board:
@@ -23,10 +22,10 @@ Maybe the most famous development board using AVR is Arduino. Arduino is an AVR 
  
 * Programmer: 
   + ISP Programmer (either usbasp or usbtiny)
-  + Or an arduino uno/nano board (which can be turn to a ISP programer)
+  + Or an arduino uno/nano board (which can be turned to a ISP programer)
   + Or CH340 serial adatper with a self-made adapter to support programming with debugwire/UPDI.
-  + [Optional] Or High voltage debugwire and UPDI programmer to rescue your “bricked” device.
-  + Or All debugers mentioned below. 
+  + [Optional] Or High voltage debugwire and UPDI programmer to rescue your “bricked” device (you can make them yourself).
+  + Or All debuggers mentioned below. 
 
 * Debugger: 
   + AVR JTAG ICE and above for JTAG (only about 10 of the oldest model of AVR has JTAG support, such as M128)
@@ -34,17 +33,19 @@ Maybe the most famous development board using AVR is Arduino. Arduino is an AVR 
   + or AVR JTAG ICE 3 / ATMEL ICE / PICKIT4 for all debugging protocol include UPDI
   + or CH340 serial USB adapter with a self-made 4.7k adapter for [dwdebug](https://github.com/dcwbrown/dwire-debug). **and this is the only complete opensource(include hardware and software) debugging solution for AVR.**
 
+Due to the complicated situation，Here is some notes for beginners:
+
 **NOTE:**
 
 - You'd better have an ISP programmer to program or change the FUSE bits.
 
+- Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire adapter required to program) and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy a new ISP programmer.
+
+- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do that).
+
 - Changing FUSE bits is a little bit dangerous for beginners, it may 'brick' a device. For example, any ISP programmer is able to program DWEN debugwire FUSE bit. but if you want to unprogram it, you have to use AVR DRAGON and above devices, or you have a High-Voltage programmer. For UPDI, if you set the UPDI pin as GPIO, you have to use HV UPDI programmer to unprogram it. please refer to the section "how to make a debugwire FUSE rescue board" and "how to make your own HV UPDI programer". 
 
-- Not all arduino but most of them are AVR board and suite for this tutorial. Arduino uno/nano have a USB bootloader to make programming easy (no additional hardwire adapter required to program)  and can be turnned to a ISP programmer. that's to say, if you already have an arduino board, it's not necessary to buy a new ISP programmer.
-
-- Arduino uno/nano are lack of debugging support due to circuit design related to RESET pin, you need modify the hardware to enable it (and do not do this).
-
-- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version of ICE devices may lack of support for some protocols，The latest official ATMEL-ICE is always the best choice except the price.
+- There are [various programming/debugging prototols](https://www.kanda.com/blog/microcontrollers/avr-microcontrollers/avr-microcontroller-programming-interfaces-isp-jtag-tpi-pdi-updi/) for different AVR models, such as ISP, JTAG/debugwire/PDI/UPDI, etc. Earlier version of ICE devices may lack of support for some protocols，The latest official ATMEL-ICE is always the best choice except the price. And **all debugging protocol from ATMEL or MicroChip are close source and undocumented**, you should know that, the only exception is debugwire, it had complete opensource hardware and software support.
 
 - PICKIT-4 supports all AVR debug protocols include HV UPDI support (which is not supported by ATMEL-ICE), but lack of good opensource support except avadude and [pymcuprog](https://github.com/microchip-pic-avr-tools/pymcuprog) for avr mode. It's not necessary to buy a very-expensive PICKIT-4 if you only need to program AVR.
 
@@ -491,7 +492,7 @@ The difference is using LTC1261CN8 or MAX662A to replace the 5v to 12v DC-DC con
 
 <img src="https://user-images.githubusercontent.com/1625340/172352335-2d204363-145d-453d-a11e-61a20eea66ee.png" width="50%"/>
 
-Then upload below sketch to uno or nano with Arduino IDE, or use the [dw-hv-reprogramer](https://github.com/cjacker/opensource-toolchain-avr/tree/main/debugwire-hv-reprogrammer) I provided in this repo with `arduino-cli`:
+Then upload below sketch to uno or nano with Arduino IDE, or use the [dw-hv-reprogramer](https://github.com/cjacker/opensource-toolchain-avr/tree/main/debugwire-hv-reprogrammer) I provided in this repo:
 
 ```
 // AVR High-voltage Serial Fuse Reprogrammer
@@ -689,7 +690,8 @@ Reading complete..
 ```                
 
 # 7. how to make your own HV UPDI programer
-I did not try it since already have a HV UPDI programer, if you want to give a try, please refer to:
+
+Please refer to:
 
 **UPDI High-Voltage Activation Information:**
 
@@ -713,12 +715,12 @@ https://www.reddit.com/r/PrintedCircuitBoard/comments/rc81te/review_request_usb_
 <img src="https://user-images.githubusercontent.com/1625340/172050894-ef096f77-875d-4688-83fc-ba562e85b5be.jpeg" width="40%" />
 
 
-And I draw a very simple circuit here, for 12V source, you can use LTC1262CN8 (DIP8)/MAX662 or a 5v to 12 boost.
+And I draw a very simple circuit here. for 12V source, you can use LTC1262CN8 (DIP8)/MAX662 or a 5v to 12 boost.
 
 <img src="https://user-images.githubusercontent.com/1625340/172159060-1cd4196b-cedc-47e0-9750-fb3db0600d7e.png" width="50%"/>
 
 
-**High voltage JTAG2UPDI (not recommended):**
+**High voltage JTAG2UPDI (not recommended anymore):**
 
 https://github.com/Dlloydev/jtag2updi/wiki/Arduino-Nano-HV-UPDI-Programmer
 
