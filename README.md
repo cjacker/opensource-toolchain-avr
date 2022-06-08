@@ -491,7 +491,7 @@ The difference is using LTC1261CN8 or MAX662A to replace the 5v to 12v DC-DC con
 
 <img src="https://user-images.githubusercontent.com/1625340/172352335-2d204363-145d-453d-a11e-61a20eea66ee.png" width="50%"/>
 
-Then upload below sketch to uno or nano:
+Then upload below sketch to uno or nano with Arduino IDE, or use the [dw-hv-reprogramer](https://github.com/cjacker/opensource-toolchain-avr/tree/main/debugwire-hv-reprogrammer) I provided in this repo with `arduino-cli`:
 
 ```
 // AVR High-voltage Serial Fuse Reprogrammer
