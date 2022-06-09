@@ -141,12 +141,14 @@ The `<programer>` can be:
 * usbtiny
 * atmelice/\_isp/\_dw/\_pdi/\_updi for ATMEL-ICE
 * arduino
+* jtag2updi
 
 The `<target>` can be:
 * m128 for atmega128
 * m328p for atmega328p (Arduino uno/nano)
 * t13 for attiny13
 * t85 for attiny85
+* t816 for attiny816
 * m4808 for atmega4808 (Thinary nano 4808)
 * m4809 for atmega4809 (Arduino nano every)
 
@@ -156,6 +158,17 @@ For all programmers and targets 'avrdude' can support, try run:
 sudo avrdude -c help
 sudo avrdude -p help
 ```
+
+If you want to use **jtag2updi** or **HV jtag2updi** programmer to program a UPDI target, you need a modified [`avrdude.conf`](https://raw.githubusercontent.com/ElTangas/jtag2updi/master/avrdude.conf) which can be found in https://github.com/ElTangas/jtag2updi.
+
+It has been modified to work with avrdude 6.3, by removing (actually, commenting out) some incompatible stuff, and adding the "jtag2updi" programmer type.
+
+then program as:
+
+```
+sudo avrdude -C ./avrdude-jtag2updi.conf -c jtag2updi -p <target> -U flash:w:<hex file>
+```
+
 
 ## 4.2 with dwdebug
 
@@ -258,7 +271,7 @@ Fuse 5 set to 0xC8 successfully
 But after that, you can NOT use UPDI anymore since the pin works as GPIO, you have to use a HV UPDI programmer to unprogram it, such as with HV JTAG2UPDI programmer:
 
 ```
-avrdude -C ./avrdude.conf -c jtag2updi -p t816 -P /dev/ttyUSB0  -U fuse5:w:0xC4:m
+avrdude -C ./avrdude-jtag2updi.conf -c jtag2updi -p t816 -P /dev/ttyUSB0  -U fuse5:w:0xC4:m
 ```
 
 For more information, pleaser refer to the datasheet of ATTINY816:
