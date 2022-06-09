@@ -255,7 +255,7 @@ Device info: {'family': 'tinyAVR', 'nvm': 'P:0', 'ocd': 'D:0', 'osc': '3', 'devi
 Fuse 5 set to 0xC8 successfully
 ```
 
-But after that, you have to use a HV UPDI programmer to unprogram it, such as with HV JTAG2UPDI programmer:
+But after that, you can NOT use UPDI anymore since the pin works as GPIO, you have to use a HV UPDI programmer to unprogram it, such as with HV JTAG2UPDI programmer:
 
 ```
 avrdude -C ./avrdude.conf -c jtag2updi -p t816 -P /dev/ttyUSB0  -U fuse5:w:0xC4:m
