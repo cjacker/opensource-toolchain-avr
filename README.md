@@ -217,6 +217,55 @@ Use Thinary nano 4808 and blink demo as example:
 pyupdi -c /dev/ttyUSB0 -d atmega4808 -b 115200 -e  -f main.hex 
 ```
 
+Use attiny816 as example to read the fuse bits:
+```
+pyupdi  -c /dev/ttyUSB0 -d attiny816 -b 115200 -fr
+```
+
+The output looks like:
+```
+Device info: {'family': 'tinyAVR', 'nvm': 'P:0', 'ocd': 'D:0', 'osc': '3', 'device_id': '1E9321', 'device_rev': '0.1'}
+Fuse:Value
+0:0x00
+1:0x00
+2:0x02
+3:0xFF
+4:0x00
+5:0xC4
+6:0x04
+7:0x00
+8:0x02
+9:0xFF
+10:0xC5
+```
+
+Note the `5:0xC4`, It means `RSTPINCFG` is set to 0x01, the UPDI pin works as UPDI.
+
+You can program the FUSE value to `0xC8` (UPDI pin as RESET) or `0xC0` (UPDI pin as GPIO), **but only HV UPDI programmer can unprogram it**.
+
+Program FUSE bit:
+
+```
+pyupdi -d attiny816 -b 115200 -c /dev/ttyUSB0 -fs "5:0xc8"
+```
+
+The output look like:
+```
+Device info: {'family': 'tinyAVR', 'nvm': 'P:0', 'ocd': 'D:0', 'osc': '3', 'device_id': '1E9321', 'device_rev': '0.1'}
+Fuse 5 set to 0xC8 successfully
+```
+
+But after that, you have to use a HV UPDI programmer to unprogram it, such as with HV JTAG2UPDI programmer:
+
+```
+avrdude -C ./avrdude.conf -c jtag2updi -p t816 -P /dev/ttyUSB0  -U fuse5:w:0xC4:m
+```
+
+For more information, pleaser refer to the datasheet of ATTINY816:
+
+<img src="https://user-images.githubusercontent.com/1625340/172767898-f0f54a86-1ce0-46d2-bc5f-1e2e69e834f3.png" width="60%"/>
+
+
 ## 4.4 with pymcuprog
 pymcuprog is a Python utility for programming various Microchip MCU devices using Microchip CMSIS-DAP based debuggers.
 
