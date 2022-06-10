@@ -756,23 +756,27 @@ Reading complete..
 
 # 7. how to make your own HV Serial UPDI programer
 
-You can make your own High voltage serial UPDI programmer, I provide a simple circuit here to work with CH340 USB serial adapter (requires RTS pin).
+You can make your own High voltage serial UPDI programmer, I provide a simple circuit here to work with CH34x USB serial adapter (requires RTS pin).
 
-I draw a very simple circuit here. for 12V source, you can use LTC1262CN8 DIP8 or MAX662 DIP8.
+This adapter can works with debugwire, updi and HV UPDI.
 
-<img src="https://user-images.githubusercontent.com/1625340/172994510-61aed7cb-52eb-4191-9915-805fa476ffd8.png" width="50%"/>
+<img src="https://user-images.githubusercontent.com/1625340/173069214-95fd82ce-2090-428c-abb9-af0c7cf6ca2e.png" width="50%"/>
+
+<img src="https://user-images.githubusercontent.com/1625340/173069916-3e49c64f-2fdd-4696-b55f-9ec9032cdcbc.jpg" width="50%"/>
+
 
 The BOM:
 - one LTC1262CN8 DIP-8 or MAX662ACPA DIP-8, DC/DC converter.
 - one SI2301CDS-T1-GE3 SOT-23 or IRLML6402TRPBF SOT-23, P-MOS
-- one SOT-23 to 2.54 pin adapter board
+- one SOT-23 to 2.54 converter board
 - two 220nF (224) capacitor
 - two 1uF (105) capacitor
 - one 10nF(103) or 100nF(104) or 1uF(105) capacitor
 - two 220 Ohm resistor
 - one 1k Ohm resistor
-- two 1n914 or 1n4148 or 1n5819 schottky diode
-- one 5.x v zener diode
+- three 1n914 or 1n4148 or 1n5819 schottky diode
+- one 5.?V zener diode
+
 
 
 For more information about High-Voltage UPDI, please refer to [**UPDI High-Voltage Activation Information**](https://microchipdeveloper.com/mplabx:avr-updi-info).
