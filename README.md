@@ -756,9 +756,7 @@ Reading complete..
 
 # 7. how to make your own HV Serial UPDI programer
 
-You can make your own High voltage serial UPDI programmer, I provide a simple circuit here to work with CH34x USB serial adapter (requires RTS pin).
-
-This adapter can works with debugwire, updi and HV UPDI.
+I provide a simple circuit here that you can make it by yourself, it can work with CH34x and other USB serial adapter (requires RTS pin). This adapter can works as debugwire, updi and HV UPDI programmer, and **it does NOT need any changes to pyupdi**.
 
 <img src="https://user-images.githubusercontent.com/1625340/173069214-95fd82ce-2090-428c-abb9-af0c7cf6ca2e.png" width="50%"/>
 
