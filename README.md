@@ -775,7 +775,7 @@ The BOM:
 - one 5.x v zener diode
 
 
-For more information about High-Voltage UPDI, please refer to [**UPDI High-Voltage Activation Information:**](https://microchipdeveloper.com/mplabx:avr-updi-info) 
+For more information about High-Voltage UPDI, please refer to [**UPDI High-Voltage Activation Information**](https://microchipdeveloper.com/mplabx:avr-updi-info).
 
 
 I take below HV serial UPDI adapter as reference to design my HV Serial UPDI adapter, **but note the original circuit design is not work with my CH341B USB serial adapter**.
