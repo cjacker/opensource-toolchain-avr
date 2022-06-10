@@ -159,14 +159,17 @@ sudo avrdude -c help
 sudo avrdude -p help
 ```
 
-If you want to use **jtag2updi** or **HV jtag2updi** programmer to program a UPDI target, you need a modified [`avrdude.conf`](https://raw.githubusercontent.com/ElTangas/jtag2updi/master/avrdude.conf) which can be found in https://github.com/ElTangas/jtag2updi.
+If you want to use **jtag2updi** or **HV jtag2updi** programmer to program a UPDI target, you need to update avrdude to 7.0, or need a modified [`avrdude.conf`](https://raw.githubusercontent.com/ElTangas/jtag2updi/master/avrdude.conf) which can be found in https://github.com/ElTangas/jtag2updi.
 
-It has been modified to work with avrdude 6.3, by removing (actually, commenting out) some incompatible stuff, and adding the "jtag2updi" programmer type.
-
-then program as:
+for avrdude < 7.0:
 
 ```
 sudo avrdude -C ./avrdude-jtag2updi.conf -c jtag2updi -p <target> -U flash:w:<hex file>
+```
+for avrdude >= 7.0:
+
+```
+sudo avrdude -c jtag2updi -p <target> -U flash:w:<hex file>
 ```
 
 
