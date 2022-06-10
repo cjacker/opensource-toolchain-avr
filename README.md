@@ -553,7 +553,7 @@ And the second version with LTC1262CN8 or MAX662A and Arduino nano dock:
 
 <img src="https://user-images.githubusercontent.com/1625340/172346261-c572c99e-f601-424f-aa4c-22d95d8b2cd2.jpg" width="50%"/>
 
-The difference is using LTC1261CN8 or MAX662A to replace the 5v to 12v DC-DC converter:
+The difference compare to first version is using LTC1261CN8 or MAX662A to replace the 5v to 12v DC-DC converter:
 
 <img src="https://user-images.githubusercontent.com/1625340/172352335-2d204363-145d-453d-a11e-61a20eea66ee.png" width="50%"/>
 
