@@ -754,36 +754,40 @@ Reading complete..
 
 ```                
 
-# 7. how to make your own HV UPDI programer
+# 7. how to make your own HV Serial UPDI programer
 
-Please refer to:
+You can make your own High voltage serial UPDI programmer, I provide a simple circuit here to work with CH340 USB serial adapter (requires RTS pin).
 
-**UPDI High-Voltage Activation Information:**
+I draw a very simple circuit here. for 12V source, you can use LTC1262CN8 DIP8 or MAX662 DIP8.
 
-https://microchipdeveloper.com/mplabx:avr-updi-info
+<img src="https://user-images.githubusercontent.com/1625340/172994510-61aed7cb-52eb-4191-9915-805fa476ffd8.png" width="50%"/>
+
+The BOM:
+- one LTC1262CN8 DIP-8 or MAX662ACPA DIP-8, DC/DC converter.
+- one SI2301CDS-T1-GE3 SOT-23 or IRLML6402TRPBF SOT-23, P-MOS
+- one SOT-23 to 2.54 pin adapter board
+- two 220nF (224) capacitor
+- two 1uF (105) capacitor
+- one 10nF(103) or 100nF(104) or 1uF(105) capacitor
+- two 220 Ohm resistor
+- one 1k Ohm resistor
+- two 1n914 or 1n4148 or 1n5819 schottky diode
+- one 5.x v zener diode
+
+
+For more information about High-Voltage UPDI, please refer to [**UPDI High-Voltage Activation Information:**](https://microchipdeveloper.com/mplabx:avr-updi-info) 
+
+
+I take below HV serial UPDI adapter as reference to design my HV Serial UPDI adapter, **but note the original circuit design is not work with my CH341B USB serial adapter**.
 
 **HV Serial UPDI:**
-
-This is the simplest way to build a self-made HV UPDI programmer, it's a very smart design, and use UART hardwire flow control to send the 12V pulse.
 
 https://www.tindie.com/products/leonerd/avr-updi-programmer-with-12v/
 
 <img src="https://user-images.githubusercontent.com/1625340/172050880-6eea0609-d28f-437b-a38e-111821524b69.png" width="40%"/>
 
 
-Another design:
-
-https://www.reddit.com/r/PrintedCircuitBoard/comments/rc81te/review_request_usb_updi_programmer_with_12v_pulse/
-
-<img src="https://user-images.githubusercontent.com/1625340/172050889-e8019066-f63d-47fb-a321-0d6407829559.jpeg" width="40%"/>
-
-<img src="https://user-images.githubusercontent.com/1625340/172050894-ef096f77-875d-4688-83fc-ba562e85b5be.jpeg" width="40%" />
-
-
-And I draw a very simple circuit here. for 12V source, you can use LTC1262CN8 (DIP8)/MAX662 or a 5v to 12 boost.
-
-<img src="https://user-images.githubusercontent.com/1625340/172159060-1cd4196b-cedc-47e0-9750-fb3db0600d7e.png" width="50%"/>
-
+Another HV UPDI solution:
 
 **High voltage JTAG2UPDI (not recommended anymore):**
 
