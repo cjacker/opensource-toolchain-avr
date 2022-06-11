@@ -758,7 +758,7 @@ Reading complete..
 
 [In this repo](https://github.com/cjacker/hv-serial-updi-programmer) I provide a simple circuit here that you can make a HV UPDI/Debugwire adapter by yourself, it can work with CH34x and other USB serial adapter (requires RTS pin). This adapter can work as debugwire, updi and HV UPDI programmer, and **it does NOT need any code changes to pyupdi**.
 
-<img src="https://user-images.githubusercontent.com/1625340/173069214-95fd82ce-2090-428c-abb9-af0c7cf6ca2e.png" width="50%"/>
+<img src="https://github.com/cjacker/hv-serial-updi-programmer/blob/main/hv-serial-updi.png" width="50%"/>
 
 <img src="https://user-images.githubusercontent.com/1625340/173069916-3e49c64f-2fdd-4696-b55f-9ec9032cdcbc.jpg" width="50%"/>
 
