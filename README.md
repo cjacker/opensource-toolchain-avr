@@ -110,7 +110,7 @@ You should change the `<MCU TYPE>` according to your board. for mcu type avr-gcc
 
 The blink example in this repo provide a configurable 'Makefile', you can change the 'MCU_TYPE' defined in 'Makefile'.
 
-**NOTE: there is a lot of tutotial use `-R .eeprom` with avr-objcopy, it's meaningless for this example."
+**NOTE: there is a lot of tutotial use `-R .eeprom` with avr-objcopy, it's meaningless for this example.**
 
 
 # 4. Programming
@@ -139,7 +139,7 @@ sudo avrdude -c <programmer> -p <target> -U flash:w:<hex file>
 The `<programer>` can be:
 * usbasp
 * usbtiny
-* atmelice/\_isp/\_dw/\_pdi/\_updi for ATMEL-ICE
+* atmelice_isp/atmelice_dw/atmelice_pdi/atmelice_updi for ATMEL-ICE
 * arduino
 * jtag2updi
 
@@ -773,9 +773,6 @@ The BOM:
 - two 220 Ohm resistor
 - one 1k Ohm resistor
 - three 1n914 or 1n4148 or 1n5819 schottky diode
-- one 5.?V zener diode
-
-
 
 For more information about High-Voltage UPDI, please refer to [**UPDI High-Voltage Activation Information**](https://microchipdeveloper.com/mplabx:avr-updi-info).
 
