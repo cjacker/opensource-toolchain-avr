@@ -803,6 +803,6 @@ https://github.com/Dlloydev/jtag2updi/wiki/DIY-HV-UPDI-Programmer
 
 # 8. how to update USBASP firmware
 
-If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow this guide:
+If **"avrdude : warning : Can not Set sck period . usbasp please check for firmware update"**, it means your usbasp adapter's firmware is outdated. it should still works well, it is NOT neccesary to update the firmware. but if you insist to do that, please follow [this guide](https://github.com/cjacker/opensource-toolchain-avr/blob/main/how-to-update-usbasp-firmware.md).
 
 
