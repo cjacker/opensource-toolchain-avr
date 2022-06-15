@@ -15,6 +15,24 @@ For more info about AVR, please refer to https://en.wikipedia.org/wiki/AVR_micro
 
 Maybe the most famous development board using AVR is Arduino. Arduino is an AVR processor running special code that lets you use the Arduino environment to program and upload code easily. This tutorial is not for Arduino development, it's for AVR opensource toolchain.
 
+# Table of contents
+- [Hardware prerequist](https://github.com/cjacker/opensource-toolchain-avr#1-hardware-prerequist)
+- [Toolchain overview](https://github.com/cjacker/opensource-toolchain-avr#2-toolchain-overview)
+- [Compiler and SDK](https://github.com/cjacker/opensource-toolchain-avr#3-compiler-and-sdk)
+- [Programming](https://github.com/cjacker/opensource-toolchain-avr#4-programming)
+  + [with avrdude](https://github.com/cjacker/opensource-toolchain-avr#41-with-avrdude)
+  + [with dwdebug](https://github.com/cjacker/opensource-toolchain-avr#42-with-dwdebug)
+  + [with pyupdi](https://github.com/cjacker/opensource-toolchain-avr#43-with-pyupdi)
+  + [with pymcuprog](https://github.com/cjacker/opensource-toolchain-avr#44-with-pymcuprog)
+- [Debugging](https://github.com/cjacker/opensource-toolchain-avr#5-debugging)
+  + [with avarice](https://github.com/cjacker/opensource-toolchain-avr#51-with-avarice)
+  + [with dwdebug](https://github.com/cjacker/opensource-toolchain-avr#52-with-dwdebug)
+  + [with bloom](https://github.com/cjacker/opensource-toolchain-avr#53-with-bloom)
+- [how to make a debugwire FUSE rescue board](https://github.com/cjacker/opensource-toolchain-avr#6-how-to-make-a-debugwire-fuse-rescue-board)
+- [how to make your own HV Serial UPDI programer](https://github.com/cjacker/opensource-toolchain-avr#7-how-to-make-your-own-hv-serial-updi-programer)
+- [how to update USBASP firmware](https://github.com/cjacker/opensource-toolchain-avr#8-how-to-update-usbasp-firmware)
+
+
 # 1. Hardware prerequist
 
 * AVR development board:
