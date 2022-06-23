@@ -1,5 +1,0 @@
-{
-  "cpu": {
-    "fqbn": "arduino:avr:nano"
-  }
-}

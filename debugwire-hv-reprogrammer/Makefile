@@ -1,11 +1,15 @@
-all: upload
+# Makefile for linux with arduino-cli
+
+TARGET=uno
+PORT=/dev/ttyUSB0
+
+all:
+	@echo "'make upload TARGET=uno' for Arduino uno"
+	@echo "'make upload TARGET=nano' for Arduino nano"
 
 compile:
 	arduino-cli core install arduino:avr
-	arduino-cli compile -b arduino:avr:nano debugwire-hv-reprogrammer
+	arduino-cli compile -b arduino:avr:$(TARGET) debugwire-hv-reprogrammer
 
 upload: compile
-	arduino-cli upload -p /dev/ttyUSB0 --fqbn arduino:avr:nano debugwire-hv-reprogrammer
-
-rescue:
-	minicom -b 19200 -D /dev/ttyUSB0	
+	arduino-cli upload -p $(PORT) --fqbn arduino:avr:$(TARGET) debugwire-hv-reprogrammer
