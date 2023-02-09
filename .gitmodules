@@ -1,0 +1,3 @@
+[submodule "hv-serial-updi-programmer"]
+	path = hv-serial-updi-programmer
+	url = https://github.com/cjacker/hv-serial-updi-programmer
