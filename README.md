@@ -559,6 +559,8 @@ $ avr-gdb
 
 # 6. how to make a debugwire FUSE rescue board
 
+**NOTE :" Some nano clone may be not work as expected,
+
 According to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/, you can make a rescue board if you brick your attiny device. actually, it can be used to modify FUSE bit of attiny devices as you like.
   
 The rescue board use arduino uno/nano as conroller and the circuit diagram here:
@@ -745,7 +747,7 @@ unsigned int readSignature () {
 }
 ```
 
-After upload the sketch, open 'serial monitor' of arduino IDE and set baudrate to 19200/no line ending, or use `minicom -b 19200 -D /dev/ttyUSB0`, wire up as circuit diagram indicated.
+After upload the sketch, open 'serial monitor' of arduino IDE and set baudrate to 19200/no line ending, or use `tio -b 19200 /dev/ttyUSB0`, wire up as circuit diagram indicated.
                 
 When you get the msg:
 ```
