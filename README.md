@@ -559,7 +559,7 @@ $ avr-gdb
 
 # 6. how to make a debugwire FUSE rescue board
 
-**NOTE :" Some nano clone may be not work as expected,
+**NOTE :** Some nano clone may be not work as expected,
 
 According to https://www.electronics-lab.com/recover-bricked-attiny-using-arduino-as-high-voltage-programmer/, you can make a rescue board if you brick your attiny device. actually, it can be used to modify FUSE bit of attiny devices as you like.
   
@@ -780,7 +780,7 @@ Reading complete..
 
 # 7. how to make your own HV Serial UPDI programer
 
-[In this repo](https://github.com/cjacker/hv-serial-updi-programmer) I provide a simple circuit here that you can make a HV UPDI/Debugwire adapter by yourself, it can work with CH34x and other USB serial adapter (requires RTS pin). This adapter can work as debugwire, updi and HV UPDI programmer, and **it does NOT need any code changes to pyupdi**.
+[In this repo](https://github.com/cjacker/hv-serial-updi-programmer) I provide a simple circuit that you can make a HV UPDI/Debugwire adapter by yourself, it can work with CH34x and other USB serial adapter (requires RTS pin). This adapter can work as debugwire, updi and HV UPDI programmer, and **it does NOT need any code changes to pyupdi**.
 
 <img src="https://github.com/cjacker/hv-serial-updi-programmer/blob/main/hv-serial-updi.png" width="50%"/>
 
